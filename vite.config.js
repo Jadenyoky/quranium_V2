@@ -12,54 +12,52 @@ export default defineConfig({
         enabled: true,
       },
       manifest: {
-        name: "Quranium",
-        short_name: "Quranium",
-        theme_color: "#ff0",
-        background_color: "#00f",
-        display: "standalone",
-        orientation: "portrait",
-        scope: "/",
-        start_url: "/",
+        theme_color: "#8936FF",
+        background_color: "#2EC6FE",
         icons: [
           {
-            src: "images/icons/icon-72x72.png",
-            sizes: "72x72",
-            type: "image/png",
-          },
-          {
-            src: "images/icons/icon-96x96.png",
-            sizes: "96x96",
-            type: "image/png",
-          },
-          {
-            src: "images/icons/icon-128x128.png",
-            sizes: "128x128",
-            type: "image/png",
-          },
-          {
-            src: "images/icons/icon-144x144.png",
-            sizes: "144x144",
-            type: "image/png",
-          },
-          {
-            src: "images/icons/icon-152x152.png",
-            sizes: "152x152",
-            type: "image/png",
-          },
-          {
-            src: "images/icons/icon-192x192.png",
-            sizes: "192x192",
-            type: "image/png",
-          },
-          {
-            src: "images/icons/icon-384x384.png",
-            sizes: "384x384",
-            type: "image/png",
-          },
-          {
-            src: "images/icons/icon-512x512.png",
+            purpose: "maskable",
             sizes: "512x512",
+            src: "images/icons/icon512_maskable.png",
             type: "image/png",
+          },
+          {
+            purpose: "any",
+            sizes: "512x512",
+            src: "images/icons/icon512_rounded.png",
+            type: "image/png",
+          },
+        ],
+        orientation: "any",
+        display: "standalone",
+        dir: "auto",
+        lang: "en-EG",
+        name: "Quranium",
+        short_name: "Quranium",
+        shortcuts: [
+          {
+            name: "Home",
+            short_name: "Home",
+            url: "/",
+            icons: [
+              {
+                src: "images/icons/icon-72x72.png",
+                sizes: "72x72",
+                type: "image/png",
+              },
+            ],
+          },
+          {
+            name: "Post 1",
+            short_name: "Post 1",
+            url: "/post/1",
+            icons: [
+              {
+                src: "images/icons/icon-72x72.png",
+                sizes: "72x72",
+                type: "image/png",
+              },
+            ],
           },
         ],
       },
