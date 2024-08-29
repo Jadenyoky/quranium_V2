@@ -12,11 +12,10 @@ const ThemeContextProvider = ({ children }) => {
 
   useEffect(() => {
     localStorage.setItem("theme", mode);
+    document.body.className = mode;
   }, [mode]);
 
   const toggleTheme = () => {
-    const body = document.querySelector("body");
-    body.style.transition = "background 0.5s ease";
     setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
   };
 
