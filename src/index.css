@@ -37,8 +37,14 @@
 /* All body */
 html,
 body {
-  min-height: 100svh;
+  /* min-height: 100svh; */
   transition: all 0.2s ease;
+  height: 100%;
+  margin: 0;
+  padding-top: env(safe-area-inset-top);
+  /* تداخل مع شريط الحالة العلوي */
+  padding-bottom: env(safe-area-inset-bottom);
+  /* تداخل مع شريط التنقل السفلي */
 }
 
 /* page transitions */
