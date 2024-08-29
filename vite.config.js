@@ -30,7 +30,7 @@ export default defineConfig({
           },
         ],
         // orientation: "portrait-primary",
-        display: "browser",
+        display: "standalone",
         name: "Quranium",
         short_name: "Quranium",
         shortcuts: [
