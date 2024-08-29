@@ -37,8 +37,12 @@
 /* All body */
 html,
 body {
-  min-height: 100svh;
+  /* min-height: 100svh; */
   transition: all 0.2s ease;
+  height: 100%;
+  margin: 0;
+  touch-action: none;
+  -ms-touch-action: none;
 }
 
 /* page transitions */

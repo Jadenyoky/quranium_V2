@@ -31,8 +31,6 @@ export default defineConfig({
         ],
         orientation: "portrait-primary",
         display: "fullscreen",
-        dir: "auto",
-        lang: "en-EG",
         name: "Quranium",
         short_name: "Quranium",
         shortcuts: [
