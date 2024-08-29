@@ -29,7 +29,7 @@ export default defineConfig({
             type: "image/png",
           },
         ],
-        orientation: "portrait-primary",
+        orientation: "portrait",
         display: "fullscreen",
         name: "Quranium",
         short_name: "Quranium",
