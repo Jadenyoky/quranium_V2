@@ -29,8 +29,8 @@ export default defineConfig({
             type: "image/png",
           },
         ],
-        orientation: "portrait-primary",
-        display: "fullscreen",
+        // orientation: "portrait-primary",
+        display: "browser",
         name: "Quranium",
         short_name: "Quranium",
         shortcuts: [
