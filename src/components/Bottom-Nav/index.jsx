@@ -1,17 +1,13 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Styles from "./nav.module.css";
 import {
-  faBookmark as bookmarkSolid,
   faSpinner,
   faUser as userSolid,
 } from "@fortawesome/free-solid-svg-icons";
-import {
-  faBookmark as bookmarkReg,
-  faUser as userReg,
-} from "@fortawesome/free-regular-svg-icons";
+import { faUser as userReg } from "@fortawesome/free-regular-svg-icons";
 import { motion } from "framer-motion";
 import { BottomNavigation, BottomNavigationAction } from "@mui/material";
 import { scale, scaleProfile } from "./anim";
