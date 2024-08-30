@@ -19,14 +19,13 @@ export default function BottomNav() {
 
   const navi = useNavigate();
   const [value, setValue] = useState(null);
-  const [open, setopen] = useState(false);
 
   const buttons = [
     {
       name: "home",
       path: "/",
       icon: "fi fi-rs-home",
-      active: "fi fi-ss-home",
+      active: "fi fi-sr-home",
       title: "Home",
       navigate: () => {
         navi("/", { state: { title: "Home" } });
@@ -35,8 +34,8 @@ export default function BottomNav() {
     {
       name: "about",
       path: "/about",
-      icon: "fi fi-tr-diary-bookmarks",
-      active: "fi fi-ss-diary-bookmarks",
+      icon: "fi fi-rs-diary-bookmarks",
+      active: "fi fi-sr-diary-bookmarks",
       title: "About",
       navigate: () => {
         navi("/about", { state: { title: "About" } });
@@ -45,7 +44,7 @@ export default function BottomNav() {
     {
       name: "contact",
       path: "/contact",
-      icon: "fi fi-rr-search",
+      icon: "fi fi-rs-search",
       active: "fi fi-sr-search",
       title: "Contact",
       navigate: () => {
@@ -56,7 +55,7 @@ export default function BottomNav() {
       name: "posts",
       path: "/posts",
       icon: "fi fi-rs-grid",
-      active: "fi fi-ss-grid",
+      active: "fi fi-sr-grid",
       title: "Posts",
       navigate: () => {
         navi("/posts", { state: { title: "Posts" } });
@@ -75,6 +74,7 @@ export default function BottomNav() {
       setValue("posts");
     }
   }, [pathname]);
+
   return (
     <>
       <motion.div
@@ -87,24 +87,39 @@ export default function BottomNav() {
         transition="transition"
       >
         {isLoaded ? (
-          <SignedOut>
-            <SignInButton
-              mode="modal"
-              children={
-                <motion.div
-                  variants={scaleProfile}
-                  whileTap={{ scale: 0.9 }}
-                  className={Styles.profile}
-                >
-                  <FontAwesomeIcon
-                    className={Styles.icon}
-                    icon={userReg}
-                    size="2x"
-                  />
-                </motion.div>
-              }
-            />
-          </SignedOut>
+          <div>
+            <SignedOut>
+              <SignInButton
+                mode="redirect"
+                children={
+                  <motion.div
+                    variants={scaleProfile}
+                    whileTap={{ scale: 0.9 }}
+                    className={Styles.profileLogin}
+                  >
+                    <FontAwesomeIcon
+                      className={Styles.icon}
+                      icon={userReg}
+                      size="2x"
+                    />
+                  </motion.div>
+                }
+              />
+            </SignedOut>
+            <SignedIn>
+              <motion.div
+                variants={scaleProfile}
+                whileTap={{ scale: 0.9 }}
+                className={Styles.profile}
+              >
+                <FontAwesomeIcon
+                  className={Styles.icon}
+                  icon={userSolid}
+                  size="2x"
+                />
+              </motion.div>
+            </SignedIn>
+          </div>
         ) : (
           <motion.div
             variants={scaleProfile}
@@ -119,21 +134,6 @@ export default function BottomNav() {
             />
           </motion.div>
         )}
-
-        <SignedIn>
-          <motion.div
-            variants={scaleProfile}
-            whileTap={{ scale: 0.9 }}
-            className={Styles.profile}
-          >
-            <FontAwesomeIcon
-              className={Styles.icon}
-              icon={userSolid}
-              size="2x"
-            />
-          </motion.div>
-        </SignedIn>
-
         <BottomNavigation
           value={value}
           onChange={(event, newValue) => {

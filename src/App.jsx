@@ -1,14 +1,23 @@
-import { useContext, useEffect, useState } from "react";
-import { Link, Route, Routes, NavLink, useLocation } from "react-router-dom";
+// React
+import { useEffect } from "react";
+import { Route, Routes, NavLink, useLocation } from "react-router-dom";
+// Motion
+import { motion, AnimatePresence } from "framer-motion";
+// Scrollbar
+import { OverlayScrollbars } from "overlayscrollbars";
+import "overlayscrollbars/overlayscrollbars.css";
+// Page Transition
+import Stairs from "./components/Stairs";
+// Components
+import BottomNav from "./components/Bottom-Nav";
+import ThemeToggle from "./components/Theme-Toggle";
+// Pages
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
-import { motion, AnimatePresence } from "framer-motion";
+import Posts from "./posts";
+import Post from "./post";
 
-import Stairs from "./components/Stairs";
-
-import { ThemeContext } from "./components/Theme/ThemeContext";
-import { Button, Typography } from "@mui/material";
 import {
   SignedIn,
   SignedOut,
@@ -18,15 +27,8 @@ import {
   UserButton,
 } from "@clerk/clerk-react";
 
-import BottomNav from "./components/Bottom-Nav";
-import { OverlayScrollbars } from "overlayscrollbars";
-import "overlayscrollbars/overlayscrollbars.css";
-import Posts from "./posts";
-import Post from "./post";
-
 function App() {
   const location = useLocation();
-  const { mode, toggleTheme } = useContext(ThemeContext);
 
   OverlayScrollbars(document.body, {
     className: "os-theme-dark",
@@ -42,28 +44,6 @@ function App() {
   }, [[], location]);
   return (
     <>
-      <div>
-        <Typography variant="h4" gutterBottom>
-          {mode.charAt(0).toUpperCase() + mode.slice(1)} Mode
-        </Typography>
-        <Button color="error" variant="contained" onClick={toggleTheme}>
-          Toggle to {mode === "light" ? "Dark" : "Light"} Mode
-        </Button>
-        <Button variant="contained" onClick={toggleTheme}>
-          Toggle to {mode === "light" ? "Dark" : "Light"} Mode
-        </Button>
-      </div>
-      <div className="p-8 bg-primary">
-        <header className="mb-8 bg-primary">
-          <h1 className="text-4xl font-bold mb-4 bg-primary">
-            Themed Tailwind CSS Page
-          </h1>
-          <p className="text-lg bg-primary">
-            Explore different themes with Tailwind CSS and CSS Variables.
-          </p>
-        </header>
-      </div>
-
       <NavLink to="/" state={{ title: "Home" }}>
         Home
       </NavLink>
@@ -77,10 +57,10 @@ function App() {
         Posts
       </NavLink>
 
-      <SignedOut>
+      {/* <SignedOut>
         <SignIn fallbackRedirectUrl={location.pathname} />
         <SignInButton mode="modal" fallbackRedirectUrl={location.pathname} />
-      </SignedOut>
+      </SignedOut> */}
 
       <SignedIn>
         <UserButton />
@@ -88,6 +68,7 @@ function App() {
         <SignOutButton redirectUrl={location.pathname} />
       </SignedIn>
 
+      <ThemeToggle />
       <BottomNav />
 
       <AnimatePresence mode="wait">

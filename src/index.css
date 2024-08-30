@@ -4,6 +4,11 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: uicons-solid-rounded;
+  src: url(./assets/uicons-solid-rounded-IYSBBSWN.woff2);
+}
+
 :root,
 .light {
   --primary-color: #3490dc;
