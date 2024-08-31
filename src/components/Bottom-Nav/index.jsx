@@ -89,28 +89,29 @@ export default function BottomNav() {
         {isLoaded ? (
           <div>
             <SignedOut>
-              <SignInButton
-                mode="redirect"
-                children={
-                  <motion.div
-                    variants={scaleProfile}
-                    whileTap={{ scale: 0.9 }}
-                    className={Styles.profileLogin}
-                  >
-                    <FontAwesomeIcon
-                      className={Styles.icon}
-                      icon={userReg}
-                      size="2x"
-                    />
-                  </motion.div>
+              <motion.div
+                variants={scaleProfile}
+                whileTap={{ scale: 0.9 }}
+                className={Styles.profileLogin}
+                onClick={() =>
+                  navi("/profile", { state: { title: "Profile" } })
                 }
-              />
+              >
+                <FontAwesomeIcon
+                  className={Styles.icon}
+                  icon={userReg}
+                  size="2x"
+                />
+              </motion.div>
             </SignedOut>
             <SignedIn>
               <motion.div
                 variants={scaleProfile}
                 whileTap={{ scale: 0.9 }}
                 className={Styles.profile}
+                onClick={() =>
+                  navi("/profile", { state: { title: "Profile" } })
+                }
               >
                 <FontAwesomeIcon
                   className={Styles.icon}

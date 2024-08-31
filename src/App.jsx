@@ -17,15 +17,9 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Posts from "./posts";
 import Post from "./post";
+import Profile from "./pages/Profile";
 
-import {
-  SignedIn,
-  SignedOut,
-  SignIn,
-  SignInButton,
-  SignOutButton,
-  UserButton,
-} from "@clerk/clerk-react";
+import { SignedIn, SignOutButton, UserButton } from "@clerk/clerk-react";
 
 function App() {
   const location = useLocation();
@@ -44,30 +38,6 @@ function App() {
   }, [[], location]);
   return (
     <>
-      <NavLink to="/" state={{ title: "Home" }}>
-        Home
-      </NavLink>
-      <NavLink to="/about" state={{ title: "About" }}>
-        About
-      </NavLink>
-      <NavLink to="/contact" state={{ title: "Contact" }}>
-        Contact
-      </NavLink>
-      <NavLink to="/posts" state={{ title: "Posts" }}>
-        Posts
-      </NavLink>
-
-      {/* <SignedOut>
-        <SignIn fallbackRedirectUrl={location.pathname} />
-        <SignInButton mode="modal" fallbackRedirectUrl={location.pathname} />
-      </SignedOut> */}
-
-      <SignedIn>
-        <UserButton />
-
-        <SignOutButton redirectUrl={location.pathname} />
-      </SignedIn>
-
       <ThemeToggle />
       <BottomNav />
 
@@ -80,6 +50,7 @@ function App() {
               <Route path="/contact" element={<Contact />} />
               <Route path="/posts" element={<Posts />} />
               <Route path="/posts/:id" element={<Post />} />
+              <Route path="/profile" element={<Profile />} />
             </Routes>
           </Stairs>
         </motion.div>
