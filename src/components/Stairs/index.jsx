@@ -23,7 +23,7 @@ export default function Layout({ children, backgroundColor }) {
         {...anim(titlePage)}
         className="fixed top-1/2 left-1/2 -translate-x-2/4 -translate-y-2/4 text-3xl font-bold"
         style={{
-          zIndex: 10000,
+          zIndex: 10003,
         }}
       >
         . {location.state ? location.state.title : "Hello There !"}

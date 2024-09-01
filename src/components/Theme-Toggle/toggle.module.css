@@ -1,17 +1,18 @@
 .toggle {
   position: fixed;
   top: 5px;
-  left: 5px;
+  right: 15px;
   height: 50px;
   width: 50px;
-  z-index: 1001;
+  z-index: 10003;
   background: url(../../assets/svg/theme-toggle.svg) no-repeat;
-  background-size: contain;
+  background-size: cover;
   cursor: pointer;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
+
 
   i {
     font-size: 1.5rem;

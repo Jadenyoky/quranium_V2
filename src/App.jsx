@@ -19,8 +19,6 @@ import Posts from "./posts";
 import Post from "./post";
 import Profile from "./pages/Profile";
 
-import { SignedIn, SignOutButton, UserButton } from "@clerk/clerk-react";
-
 function App() {
   const location = useLocation();
 

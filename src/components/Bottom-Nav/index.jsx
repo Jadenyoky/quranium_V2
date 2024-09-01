@@ -72,6 +72,8 @@ export default function BottomNav() {
       setValue("contact");
     } else if (pathname.includes("posts")) {
       setValue("posts");
+    } else if (pathname.includes("profile")) {
+      setValue("profile");
     }
   }, [pathname]);
 
@@ -79,7 +81,7 @@ export default function BottomNav() {
     <>
       <motion.div
         className="fixed bottom-0 right-0 left-0 "
-        style={{ zIndex: 1001 }}
+        style={{ zIndex: 10003 }}
         variants={scale}
         initial="initial"
         animate="enter"

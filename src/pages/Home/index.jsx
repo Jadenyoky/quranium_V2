@@ -3,7 +3,7 @@ import Styles from "./home.module.css";
 
 const Index = () => {
   useEffect(() => {}, []);
-  return <div>asd</div>;
+  return <div>asasd</div>;
 };
 
 export default Index;
