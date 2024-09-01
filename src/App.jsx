@@ -18,6 +18,7 @@ import Contact from "./pages/Contact";
 import Posts from "./posts";
 import Post from "./post";
 import Profile from "./pages/Profile";
+import User from "./pages/Profile/user";
 
 function App() {
   const location = useLocation();
@@ -49,6 +50,7 @@ function App() {
               <Route path="/posts" element={<Posts />} />
               <Route path="/posts/:id" element={<Post />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path="/profile/user" element={<User />} />
             </Routes>
           </Stairs>
         </motion.div>

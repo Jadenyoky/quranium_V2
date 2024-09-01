@@ -74,7 +74,7 @@
           position: absolute;
           top: 10px;
           left: 30px;
-          height: 90%;
+          height: 70%;
           color: black;
         }
       }
@@ -91,7 +91,7 @@
           position: absolute;
           bottom: 0px;
           right: 20px;
-          height: 90%;
+          height: 70%;
           color: black;
         }
       }
@@ -109,7 +109,7 @@
           position: absolute;
           top: 10px;
           left: 30px;
-          height: 90%;
+          height: 70%;
           color: black;
           transform: rotate(-10deg);
 
@@ -128,7 +128,7 @@
           position: absolute;
           bottom: 0px;
           right: 0px;
-          height: 90%;
+          height: 70%;
           color: black;
           transform: rotate(-20deg);
         }

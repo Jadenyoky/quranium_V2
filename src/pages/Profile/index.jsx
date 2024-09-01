@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Styles from "./profile.module.css";
-import { SignedIn, SignedOut, SignIn, UserButton } from "@clerk/clerk-react";
+import { SignedIn, UserButton } from "@clerk/clerk-react";
 import { useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -13,6 +13,7 @@ import {
   content2,
   content3,
 } from "./anim";
+import SignRequire from "../../components/Signed-Out";
 
 const Index = () => {
   const { pathname } = useLocation();
@@ -20,15 +21,7 @@ const Index = () => {
 
   return (
     <div>
-      <SignedOut>
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1, transition: { duration: 0.5, delay: 1 } }}
-          className="h-svh grid place-content-center"
-        >
-          <SignIn fallbackRedirectUrl={pathname} />
-        </motion.div>
-      </SignedOut>
+      <SignRequire />
 
       <SignedIn>
         <motion.div
@@ -55,7 +48,11 @@ const Index = () => {
                 variants={profile}
                 className={` ${Styles.userName} font-bold text-sm  p-2 rounded-full flex justify-center items-center w-fit`}
               >
-                <UserButton showName userProfileMode="modal" />
+                <UserButton
+                  showName
+                  userProfileMode="navigation"
+                  userProfileUrl="/profile/user"
+                />
               </motion.div>
             </motion.div>
 
