@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { SignedIn, useUser } from "@clerk/clerk-react";
+import { SignedIn, useUser, SignedOut } from "@clerk/clerk-react";
 import { scaleItem, actionsAnim, actionsIcon, scale, chapter } from "./anim";
 import Styles from "./chapter.module.css";
 import { useNavigate } from "react-router-dom";
@@ -237,10 +237,19 @@ const Chapter = ({ surah, length, status }) => {
           viewport={{ once: true, amount: 0.5 }}
           className={`${Styles.item} `}
         >
-          <motion.span
-            variants={scale}
-            className={`${Styles.orderNum} `}
-          >{`${surah.revelation_order}`}</motion.span>
+          <SignedIn>
+            <motion.span
+              variants={scale}
+              className={`${Styles.orderNum} `}
+            >{`${surah.revelation_order}`}</motion.span>
+          </SignedIn>
+
+          <SignedOut>
+            <motion.span
+              variants={scale}
+              className={`${Styles.orderNumOut} `}
+            >{`${surah.revelation_order}`}</motion.span>
+          </SignedOut>
 
           <AnimatePresence>
             {isFav(surah.id) && (

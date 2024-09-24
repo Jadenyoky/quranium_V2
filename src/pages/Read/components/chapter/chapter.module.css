@@ -33,6 +33,16 @@
     opacity: 0.3 !important;
   }
 
+  .orderNumOut {
+    position: absolute;
+    bottom: 42px;
+    left: 80px;
+    z-index: 0;
+    font-size: 2rem;
+    font-family: tebian;
+    color: var(--copy) !important;
+  }
+
   .fav {
     position: absolute;
     top: 30px;
