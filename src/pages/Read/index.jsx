@@ -33,7 +33,7 @@ const Index = () => {
 
     const chaptersList = await getChapters();
     setChapters(chaptersList);
-    setnum(11);
+    setnum(20);
     setloading(true);
   };
 

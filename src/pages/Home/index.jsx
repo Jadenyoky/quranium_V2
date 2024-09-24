@@ -3,7 +3,10 @@ import Styles from "./home.module.css";
 import { motion } from "framer-motion";
 import { animCategories, animPage } from "./anim";
 import { useNavigate } from "react-router-dom";
+import quranImg from "../../assets/png/quran.png";
 import searchImg from "../../assets/png/search.png";
+import tafserImg from "../../assets/png/tafser.png";
+import listenImg from "../../assets/png/listen.png";
 
 const Index = () => {
   const navi = useNavigate();
@@ -15,7 +18,7 @@ const Index = () => {
       title: "قراءة",
       subTitle: "114 سورة",
       motion: animCategories,
-      bg: "url(./src/assets/png/quran.png) no-repeat center center var(--quran-bg-color)",
+      bg: `url(${quranImg}) no-repeat center center var(--quran-bg-color)`,
       bg_color: "var(--quran-bg-color)", // استبدال اللون بالمتغير
       bg_size: "contain",
       radius: "26% 74% 21% 79% / 76% 7% 93% 24%",
@@ -33,7 +36,7 @@ const Index = () => {
       bg_color: "var(--search-bg-color)", // استبدال اللون بالمتغير
       bg_size: "contain",
       radius: "86% 14% 86% 14% / 17% 77% 23% 83%",
-      class: Styles.three,
+      class: Styles.two,
       navigate: () => {
         navi("/read", { state: { title: "قراءة القرآن" } });
       },
@@ -43,11 +46,11 @@ const Index = () => {
       title: "استماع",
       subTitle: "قراءة",
       motion: animCategories,
-      bg: "url(src/assets/png/listen.png) no-repeat center center var(--listen-bg-color)",
+      bg: `url(${listenImg}) no-repeat center center var(--listen-bg-color)`,
       bg_color: "var(--listen-bg-color)", // استبدال اللون بالمتغير
       bg_size: "contain",
       radius: "26% 74% 21% 79% / 76% 7% 93% 24%",
-      class: Styles.four,
+      class: Styles.three,
       navigate: () => {
         navi("/read", { state: { title: "قراءة القرآن" } });
       },
@@ -56,11 +59,11 @@ const Index = () => {
       title: "تفسير",
       subTitle: "تفسير",
       motion: animCategories,
-      bg: "url(src/assets/png/tafser.png) no-repeat center center var(--tafser-bg-color)",
+      bg: `url(${tafserImg}) no-repeat center center var(--tafser-bg-color)`,
       bg_color: "var(--tafser-bg-color)", // استبدال اللون بالمتغير
       bg_size: "contain",
       radius: "86% 14% 86% 14% / 17% 77% 23% 83%",
-      class: Styles.two,
+      class: Styles.four,
       navigate: () => {
         navi("/read", { state: { title: "Quran Read" } });
       },
