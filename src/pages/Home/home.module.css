@@ -1,5 +1,119 @@
-.title {
-  background-color: red;
-  color: white;
-  height: 300px;
+.page {
+  min-height: 100svh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 20px;
+  /* background-color: var(--background); */
+  transition: background 0.3s ease;
+
+  overflow-x: hidden;
+
+  /* .header {
+    position: sticky;
+    top: 0;
+    width: 100%;
+
+    z-index: 1;
+
+    backdrop-filter: blur(100px);
+
+    .search {
+      width: 500px;
+      max-width: 70%;
+
+      background-color: var(--foreground);
+      border: 2px solid var(--border);
+
+      padding: 10px;
+      margin: 0 auto;
+      margin-top: 10px;
+      border-radius: 24px;
+    }
+  } */
+
+  .categories {
+
+    background-color: var(--primary);
+
+    /* min-height: calc(100svh - 74px - 4px); */
+    min-height: 100svh;
+
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 20px;
+
+    /* border-radius: 24px 24px 0 0; */
+
+    padding-bottom: 100px;
+
+
+    .first {
+      display: grid;
+      grid-template-columns: auto auto;
+      place-items: center;
+      gap: 70px;
+
+      padding: 60px 10px 10px 10px;
+
+      .one,
+      .two,
+      .three,
+      .four {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        width: 300px;
+        height: 200px;
+        color: black;
+        max-width: 90%;
+        border-radius: 25px;
+        color: white;
+        position: relative;
+        cursor: pointer;
+
+        box-shadow: 10px 10px 1px var(--background);
+
+        /* border: 10px solid var(--border); */
+
+        p {
+          position: absolute;
+          top: -40px;
+          left: 50%;
+          transform: translate(-50%, 0);
+          color: white;
+          font-family: 'titles';
+          text-shadow: 0 0 100px black;
+          /* font-weight: bold; */
+          font-size: 2rem;
+          background-color: inherit;
+          padding: 0px 20px;
+          border-radius: inherit;
+
+          border-bottom: 5px solid var(--border);
+
+
+        }
+
+      }
+
+
+    }
+  }
+
+}
+
+@media screen and (max-width: 700px) {
+  .search {
+    margin-left: 20px !important;
+  }
+
+  .first {
+    grid-template-columns: auto !important;
+  }
 }

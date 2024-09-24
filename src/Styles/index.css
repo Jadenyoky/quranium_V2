@@ -1,0 +1,52 @@
+/* For Themes */
+@import './Light-dark.css';
+/* For Flaticon */
+@import "@flaticon/flaticon-uicons/css/all/all";
+/* For Tailwind CSS */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "titles";
+  src: url(../assets/Fonts/thuluth1.ttf);
+}
+
+@font-face {
+  font-family: "surah";
+  src: url(../assets/Fonts/sura_names.woff2);
+}
+
+@font-face {
+  font-family: "noto";
+  src: url(../assets/Fonts/noto.woff2);
+}
+
+@font-face {
+  font-family: "tebian";
+  src: url(../assets/Fonts/tebian.ttf);
+}
+
+/* All elements */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* All body */
+body {
+  min-height: 100svh;
+  transition: 0.2s ease !important;
+  background-color: var(--background) !important;
+  direction: rtl;
+}
+
+/* scrollbar style */
+.os-theme-dark {
+  background-color: var(--scrollbar-bg);
+
+  .os-scrollbar-handle {
+    background-color: var(--scrollbar);
+  }
+}

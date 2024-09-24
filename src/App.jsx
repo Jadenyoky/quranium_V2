@@ -1,11 +1,13 @@
 // React
 import { useEffect } from "react";
-import { Route, Routes, NavLink, useLocation } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 // Motion
 import { motion, AnimatePresence } from "framer-motion";
 // Scrollbar
 import { OverlayScrollbars } from "overlayscrollbars";
 import "overlayscrollbars/overlayscrollbars.css";
+// Main Css
+import "./Styles/index.css";
 // Page Transition
 import Stairs from "./components/Stairs";
 // Components
@@ -13,7 +15,7 @@ import BottomNav from "./components/Bottom-Nav";
 import ThemeToggle from "./components/Theme-Toggle";
 // Pages
 import Home from "./pages/Home";
-import About from "./pages/About";
+import Read from "./pages/Read";
 import Contact from "./pages/Contact";
 import Posts from "./posts";
 import Post from "./post";
@@ -22,6 +24,47 @@ import User from "./pages/Profile/user";
 
 function App() {
   const location = useLocation();
+
+  const routes = [
+    {
+      path: "/",
+      component: <Home />,
+    },
+    {
+      path: "/read",
+      component: <Read />,
+    },
+    {
+      path: "/contact",
+      component: <Contact />,
+    },
+    {
+      path: "/posts",
+      component: <Posts />,
+    },
+    {
+      path: "/posts/:id",
+      component: <Post />,
+    },
+    {
+      path: "/profile",
+      component: <Profile />,
+    },
+    {
+      path: "/profile/user",
+      component: <User />,
+    },
+    {
+      path: "*",
+      component: (
+        <div>
+          <h1>404</h1>
+          <p>Page Not Found</p>
+          <a href="/">Home</a>
+        </div>
+      ),
+    },
+  ];
 
   OverlayScrollbars(document.body, {
     className: "os-theme-dark",
@@ -37,20 +80,16 @@ function App() {
   }, [[], location]);
   return (
     <>
-      <ThemeToggle />
+      {/* <ThemeToggle /> */}
       <BottomNav />
 
       <AnimatePresence mode="wait">
         <motion.div key={location.pathname}>
           <Stairs>
             <Routes location={location} key={location.pathname}>
-              <Route path="/" element={<Home />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/posts" element={<Posts />} />
-              <Route path="/posts/:id" element={<Post />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/profile/user" element={<User />} />
+              {routes.map(({ path, component }) => (
+                <Route key={path} path={path} element={component} />
+              ))}
             </Routes>
           </Stairs>
         </motion.div>

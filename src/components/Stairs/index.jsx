@@ -2,8 +2,9 @@ import React from "react";
 import { motion } from "framer-motion";
 import { opacity, expand, titlePage } from "./anim";
 import { useLocation } from "react-router-dom";
+import Styles from "./stairs.module.css";
 
-export default function Layout({ children, backgroundColor }) {
+export default function Layout({ children }) {
   const anim = (variants, custom = null) => {
     return {
       initial: "initial",
@@ -16,21 +17,24 @@ export default function Layout({ children, backgroundColor }) {
 
   const location = useLocation();
 
-  const nbOfColumns = 3;
+  const nbOfColumns = 5;
   return (
     <>
       <motion.div
         {...anim(titlePage)}
-        className="fixed top-1/2 left-1/2 -translate-x-2/4 -translate-y-2/4 text-3xl font-bold"
+        className={`${Styles.title} fixed top-1/2 left-1/2 -translate-x-2/4 -translate-y-2/4 text-3xl font-bold`}
         style={{
           zIndex: 10003,
         }}
       >
-        . {location.state ? location.state.title : "Hello There !"}
+        {location.state ? location.state.title : "مرحبًا بعودتك .."} ..
       </motion.div>
-      <div className="page stairs" style={{ backgroundColor }}>
-        <motion.div {...anim(opacity)} className="transition-background" />
-        <div className="transition-container">
+      <div className={Styles.stairs}>
+        <motion.div
+          {...anim(opacity)}
+          className={Styles.transition_background}
+        />
+        <div className={Styles.transition_container}>
           {[...Array(nbOfColumns)].map((_, i) => {
             return <motion.div key={i} {...anim(expand, nbOfColumns - i)} />;
           })}

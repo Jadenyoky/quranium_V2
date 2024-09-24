@@ -1,0 +1,212 @@
+.item {
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  /* flex-wrap: wrap; */
+  gap: 10px;
+  /* background-color: ; */
+
+  border: 2px solid var(--border);
+
+  /* width: fit; */
+  min-height: 50px;
+
+  border-radius: 24px;
+  font-family: 'titles';
+
+  box-shadow: 5px 10px 1px var(--background);
+
+  position: relative;
+
+  flex: 500px;
+
+
+  .orderNum {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    z-index: 0;
+    font-size: 2rem;
+    font-family: tebian;
+    color: var(--copy) !important;
+    opacity: 0.3 !important;
+  }
+
+  .fav {
+    position: absolute;
+    top: 30px;
+    left: 67%;
+    background: url(../../../../assets/png/heart.png) no-repeat center center;
+    background-size: contain;
+    border-radius: inherit;
+    width: 50px;
+    height: 50px;
+  }
+
+  .save {
+    position: absolute;
+    top: 35px;
+    left: 60%;
+    background: url(../../../../assets/png/bookmark.png) no-repeat center center;
+    background-size: contain;
+    border-radius: inherit;
+    width: 40px;
+    height: 40px;
+  }
+
+  .titlesurah {
+    display: flex;
+    justify-content: normal;
+    /* align-items: baseline; */
+    background-color: var(--background);
+    opacity: 0.9;
+    /* color: var(--title); */
+    /* text-shadow: 0px 0px 20px rgb(230, 230, 224); */
+    padding: 5px 20px;
+    border-radius: 16px;
+    position: relative;
+    cursor: pointer;
+    /* border-radius: 79% 21% 85% 15% / 72% 58% 42% 28%; */
+    /* border: 2px solid var(--border); */
+    font-size: 1.2rem;
+    gap: 10px;
+
+    flex: 1;
+
+    color: var(--copy);
+
+
+
+    .icon {
+      font-size: 1.3rem;
+      /* background-color: rgb(255, 255, 255); */
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-direction: column;
+      border-radius: 50%;
+      padding: 5px;
+      width: 50px;
+      height: 50px;
+      gap: 3px;
+      font-family: tebian !important;
+      /* box-shadow: 0px 0px 3px green; */
+      margin-top: 10px;
+
+      i {
+        font-size: 1.7rem;
+      }
+    }
+
+    .text {
+
+
+      div:nth-of-type(1) {
+
+        p {
+          color: white;
+          font-family: tebian;
+        }
+
+        span {
+          font-size: 2.5rem;
+          font-family: surah;
+
+          position: relative;
+
+          &::after {
+            content: '';
+            position: absolute;
+            right: -20px;
+            top: 55%;
+            transform: translate(0, -50%);
+            height: 100%;
+            width: 130%;
+            mask: url(../../../../assets/png/brush.png) no-repeat center;
+            mask-size: cover;
+            background-color: var(--border);
+            z-index: -1;
+          }
+        }
+      }
+
+      div:nth-of-type(2) {
+        font-family: tebian;
+        font-size: 0.8rem;
+        /* margin-top: -5px; */
+        color: var(--copy-lighter);
+        display: flex;
+        gap: 10px;
+
+      }
+    }
+
+    .arrowIcon {
+      display: flex;
+      align-items: center;
+      justify-content: end;
+      flex: 1;
+      color: var(--copy-lighter);
+      font-size: 1.5rem;
+    }
+
+  }
+
+  .actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    /* border: 1px solid var(--border); */
+    padding: 0 10px;
+    border-radius: 16px;
+
+    flex: 1;
+
+    z-index: 1;
+
+    .icon {
+      border: 1px solid var(--border);
+      padding: 10px;
+      border-radius: 24px;
+      cursor: pointer;
+
+      display: flex;
+      background-color: var(--background);
+      color: var(--text-stairs);
+
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 50px;
+      height: 50px;
+
+      opacity: 0.9 !important;
+
+    }
+  }
+
+}
+
+@media screen and (max-width: 768px) {
+  .item {
+    flex-direction: column;
+  }
+
+  .fav {
+    left: 110px !important;
+  }
+
+  .save {
+    left: 70px !important;
+  }
+}
+
+/* @media screen and (max-width: 850px) {
+  .title {
+    margin: 0 auto !important;
+  }
+} */

@@ -11,7 +11,7 @@ import { faUser as userReg } from "@fortawesome/free-regular-svg-icons";
 import { motion } from "framer-motion";
 import { BottomNavigation, BottomNavigationAction } from "@mui/material";
 import { scale, scaleProfile } from "./anim";
-import { SignedOut, SignedIn, SignInButton, useUser } from "@clerk/clerk-react";
+import { SignedOut, SignedIn, useUser } from "@clerk/clerk-react";
 
 export default function BottomNav() {
   const { pathname } = useLocation();
@@ -26,19 +26,19 @@ export default function BottomNav() {
       path: "/",
       icon: "fi fi-rs-home",
       active: "fi fi-sr-home",
-      title: "Home",
+      title: "الرئيسية",
       navigate: () => {
-        navi("/", { state: { title: "Home" } });
+        navi("/", { state: { title: "الرئيسية" } });
       },
     },
     {
-      name: "about",
-      path: "/about",
+      name: "read",
+      path: "/read",
       icon: "fi fi-rs-diary-bookmarks",
       active: "fi fi-sr-diary-bookmarks",
-      title: "About",
+      title: "قراءة",
       navigate: () => {
-        navi("/about", { state: { title: "About" } });
+        navi("/read", { state: { title: "قراءة" } });
       },
     },
     {
@@ -46,9 +46,9 @@ export default function BottomNav() {
       path: "/contact",
       icon: "fi fi-rs-search",
       active: "fi fi-sr-search",
-      title: "Contact",
+      title: "بحث",
       navigate: () => {
-        navi("/contact", { state: { title: "Contact" } });
+        navi("/contact", { state: { title: "بحث" } });
       },
     },
     {
@@ -56,9 +56,9 @@ export default function BottomNav() {
       path: "/posts",
       icon: "fi fi-rs-grid",
       active: "fi fi-sr-grid",
-      title: "Posts",
+      title: "المزيد",
       navigate: () => {
-        navi("/posts", { state: { title: "Posts" } });
+        navi("/posts", { state: { title: "المزيد" } });
       },
     },
   ];
@@ -66,8 +66,8 @@ export default function BottomNav() {
   useEffect(() => {
     if (pathname === "/") {
       setValue("home");
-    } else if (pathname.includes("about")) {
-      setValue("about");
+    } else if (pathname.includes("read")) {
+      setValue("read");
     } else if (pathname.includes("contact")) {
       setValue("contact");
     } else if (pathname.includes("posts")) {
@@ -80,7 +80,7 @@ export default function BottomNav() {
   return (
     <>
       <motion.div
-        className="fixed bottom-0 right-0 left-0 "
+        className={` ${Styles.allNav} fixed bottom-0 left-0 right-0`}
         style={{ zIndex: 10003 }}
         variants={scale}
         initial="initial"

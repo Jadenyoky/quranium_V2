@@ -1,0 +1,90 @@
+/* Tailwind Themes */
+:root {
+  --black: #353531;
+  --black-lighter: #353531ee;
+
+  --primary-light: #45df86;
+  --primary-dark: #1ca254;
+  --primary-content: #000000;
+
+  --success: #23ce23;
+  --warning: #cece23;
+  --error: #ce2323;
+  --success-content: #000000;
+  --warning-content: #000000;
+  --error-content: #fdf3f3;
+}
+
+.light {
+  /* General */
+  --primary: #23ce6b;
+
+  --secondary: #23b1ce;
+  --secondary-content: #000000;
+  --secondary-dark: #1c8ca2;
+
+  --background: #eaf5ef;
+  --foreground: #fafdfb;
+
+  --border: #d4eadd;
+
+  --copy: #193424;
+  --copy-light: #428a60;
+  --copy-lighter: #64b486;
+
+  --title: #129dee;
+  --title-blob: #ffffff;
+
+  /* Stairs */
+  --stairs: var(--black);
+  --text-stairs: coral;
+  --shadow-text-stairs: #fff;
+  /* Scrollbar */
+  --scrollbar: var(--black);
+  --scrollbar-bg: transparent;
+
+
+  --quran-bg-color: #3E9CA1;
+  --search-bg-color: #d54641;
+  --listen-bg-color: #7761D3;
+  --tafser-bg-color: #b54b25;
+}
+
+.dark {
+  /* General */
+  --primary: #1ca254;
+
+  --secondary: #1c8ba2;
+  --secondary-content: #c8eef5;
+  --secondary-dark: #146676;
+
+  --background: #181b19;
+  --foreground: #232926;
+  --border: #3b453f;
+
+  --copy: #fbfbfb;
+  --copy-light: #d6dcd8;
+  --copy-lighter: #9faca5;
+
+  --title: var(--primary-light);
+  --title-blob: rgba(0, 204, 255, 0.247);
+
+  /* Stairs */
+  --stairs: white;
+  --text-stairs: white;
+  --shadow-text-stairs: var(--black);
+  /* Scrollbar */
+  --scrollbar: #F5F5F5;
+  --scrollbar-bg: transparent;
+
+
+  --quran-bg-color: #2A6E6E;
+  /* لون مائل للأزرق الداكن */
+  --search-bg-color: #a1322e;
+  /* أحمر غامق */
+  --listen-bg-color: #5A479B;
+  /* بنفسجي غامق */
+  --tafser-bg-color: #84381A;
+  /* بني غامق */
+
+}

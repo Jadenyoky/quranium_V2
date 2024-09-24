@@ -22,7 +22,6 @@ const Index = () => {
   return (
     <div>
       <SignRequire />
-
       <SignedIn>
         <motion.div
           variants={allPage}
@@ -30,7 +29,7 @@ const Index = () => {
           animate="animate"
           exit="exit"
         >
-          <div className={`${Styles.profilePage} `}>
+          <div className={`${Styles.profilePage}`}>
             <motion.div
               className={`
                 ${Styles.title}

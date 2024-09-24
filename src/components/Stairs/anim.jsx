@@ -1,6 +1,3 @@
-import { duration } from "@mui/material";
-import { delay } from "framer-motion";
-
 export const expand = {
   initial: {
     top: 0,
@@ -39,14 +36,23 @@ export const titlePage = {
   initial: {
     opacity: 1,
     top: "45%",
+    visibility: "visible",
   },
   enter: {
     opacity: 0,
     top: "70%",
+    visibility: "hidden",
+    transition: {
+      duration: 1,
+      ease: [0.25, 1, 0.5, 1],
+      type: "spring",
+    },
   },
   exit: {
     opacity: 1,
     top: "45%",
+    visibility: "visible",
+
     transition: {
       duration: 1,
       ease: [0.25, 1, 0.5, 1],

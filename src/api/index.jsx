@@ -40,3 +40,8 @@ export const addUser = async (user) => {
     throw error;
   }
 };
+
+export const getChapters = async () => {
+  const apiA = await axios.get("https://api.quran.com/api/v4/chapters");
+  return apiA.data.chapters;
+};
