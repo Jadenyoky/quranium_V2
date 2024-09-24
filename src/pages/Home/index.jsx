@@ -3,6 +3,7 @@ import Styles from "./home.module.css";
 import { motion } from "framer-motion";
 import { animCategories, animPage } from "./anim";
 import { useNavigate } from "react-router-dom";
+import searchImg from "../../assets/png/search.png";
 
 const Index = () => {
   const navi = useNavigate();
@@ -14,7 +15,7 @@ const Index = () => {
       title: "قراءة",
       subTitle: "114 سورة",
       motion: animCategories,
-      bg: "url(src/assets/png/quran.png) no-repeat center center",
+      bg: "url(./src/assets/png/quran.png) no-repeat center center var(--quran-bg-color)",
       bg_color: "var(--quran-bg-color)", // استبدال اللون بالمتغير
       bg_size: "contain",
       radius: "26% 74% 21% 79% / 76% 7% 93% 24%",
@@ -28,7 +29,7 @@ const Index = () => {
       title: "بحث",
       subTitle: "قراءة",
       motion: animCategories,
-      bg: "url(src/assets/png/search.png) no-repeat center center",
+      bg: `url(${searchImg}) no-repeat center center var(--search-bg-color)`,
       bg_color: "var(--search-bg-color)", // استبدال اللون بالمتغير
       bg_size: "contain",
       radius: "86% 14% 86% 14% / 17% 77% 23% 83%",
@@ -42,7 +43,7 @@ const Index = () => {
       title: "استماع",
       subTitle: "قراءة",
       motion: animCategories,
-      bg: "url(src/assets/png/listen.png) no-repeat center center",
+      bg: "url(src/assets/png/listen.png) no-repeat center center var(--listen-bg-color)",
       bg_color: "var(--listen-bg-color)", // استبدال اللون بالمتغير
       bg_size: "contain",
       radius: "26% 74% 21% 79% / 76% 7% 93% 24%",
@@ -55,7 +56,7 @@ const Index = () => {
       title: "تفسير",
       subTitle: "تفسير",
       motion: animCategories,
-      bg: "url(src/assets/png/tafser.png) no-repeat center center",
+      bg: "url(src/assets/png/tafser.png) no-repeat center center var(--tafser-bg-color)",
       bg_color: "var(--tafser-bg-color)", // استبدال اللون بالمتغير
       bg_size: "contain",
       radius: "86% 14% 86% 14% / 17% 77% 23% 83%",
@@ -101,7 +102,7 @@ const Index = () => {
                     background: e.bg,
                     backgroundSize: e.bg_size,
                     borderRadius: e.radius,
-                    backgroundColor: e.bg_color,
+                    // backgroundColor: e.bg_color,
                   }}
                   onClick={() => {
                     e.navigate();
