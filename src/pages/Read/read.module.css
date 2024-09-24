@@ -209,7 +209,7 @@
       flex-wrap: wrap;
       background-color: var(--foreground);
 
-      border-radius: 0 0 24px 24px;
+      border-radius: 24px 0 24px 0;
 
       overflow: hidden;
 

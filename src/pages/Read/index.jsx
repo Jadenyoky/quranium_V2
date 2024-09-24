@@ -10,15 +10,31 @@ import { SignedIn, useUser } from "@clerk/clerk-react";
 import { supabase } from "../../supabase";
 
 import Chapter from "./components/chapter";
+import store from "store2";
 
 const Index = () => {
-  const { user } = useUser();
+  const { user, isLoaded } = useUser();
+  console.log(user, isLoaded);
 
-  const [sortStatus, setsortStatus] = useState("ترتيب المصحف");
-  const [currentStatus, setcurrentStatus] = useState({
-    query: "id",
-    type: "asc",
-  });
+  const ss = store("sortStatus");
+  const cc = store("currentStatus");
+
+  // const [sortStatus, setsortStatus] = useState("ترتيب المصحف");
+  // const [currentStatus, setcurrentStatus] = useState({
+  //   query: "id",
+  //   type: "asc",
+  // });
+
+  const [sortStatus, setsortStatus] = useState(ss ? ss : "ترتيب المصحف");
+  const [currentStatus, setcurrentStatus] = useState(
+    cc ? cc : { query: "id", type: "asc" }
+  );
+
+  useEffect(() => {
+    store("sortStatus", sortStatus);
+    store("currentStatus", currentStatus);
+  }, [sortStatus, currentStatus]);
+
   const [numResults, setnumResults] = useState(null);
 
   const navi = useNavigate();
@@ -32,8 +48,15 @@ const Index = () => {
     setloading(false);
 
     const chaptersList = await getChapters();
-    setChapters(chaptersList);
+    // setChapters(chaptersList);
+    const filter = _.orderBy(
+      chaptersList,
+      currentStatus.query,
+      currentStatus.type
+    );
+    setChapters(filter);
     setnum(20);
+
     setloading(true);
   };
 
@@ -116,9 +139,9 @@ const Index = () => {
     const handleScroll = () => {
       if (
         window.innerHeight + window.scrollY >=
-        document.body.offsetHeight - 500
+        document.body.offsetHeight - 1000
       ) {
-        setnum(num + 15);
+        setnum(num + 20);
       }
     };
 
@@ -211,7 +234,7 @@ const Index = () => {
           </motion.div>
         </motion.div>
 
-        {chapters.length > 0 ? (
+        {chapters.length > 0 && isLoaded ? (
           <motion.div
             variants={moveY}
             initial={"initial"}
