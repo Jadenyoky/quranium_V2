@@ -13,6 +13,8 @@ import {
   faSpinner,
 } from "@fortawesome/free-solid-svg-icons";
 import _ from "lodash";
+import { fav, save, switchFav, switchSave } from "../../../../api";
+import { moveY } from "../../anim";
 
 const Chapter = ({ surah, length, status }) => {
   const { user, isLoaded } = useUser();
@@ -113,111 +115,30 @@ const Chapter = ({ surah, length, status }) => {
       return console.log("User not found");
     }
 
-    const fav = async () => {
-      setloadingFav(false);
+    const favList = await fav(user.id);
+    setFavorites(favList);
+    setloadingFav(true);
 
-      const { data, error } = await supabase
-        .from("actions_quranium_fav")
-        .select("*")
-        .eq("user_id", user.id);
-
-      if (error) {
-        console.error("Error fetching favorites", error);
-      } else {
-        setFavorites(data);
-      }
-
-      setloadingFav(true);
-    };
-
-    const save = async () => {
-      setloadingSave(false);
-
-      const { data, error } = await supabase
-        .from("actions_quranium_save")
-        .select("*")
-        .eq("user_id", user.id);
-
-      if (error) {
-        console.error("Error fetching favorites", error);
-      } else {
-        setSaves(data);
-      }
-
-      setloadingSave(true);
-    };
-
-    fav();
-    save();
+    const saveList = await save(user.id);
+    setSaves(saveList);
+    setloadingSave(true);
   };
 
   const toggleFav = async (chapter_id) => {
     setloadingFav(false);
-    // setloadingSave(false);
 
-    const isFav = favorites.some((fav) => fav.surah_id === chapter_id);
-
-    if (isFav) {
-      const { error } = await supabase
-        .from("actions_quranium_fav")
-        .delete()
-        .eq("surah_id", chapter_id)
-        .eq("user_id", user.id);
-
-      if (error) {
-        console.log("Error removing favorite", error);
-      } else {
-        setFavorites(favorites.filter((fav) => fav.surah_id !== chapter_id));
-      }
-    } else {
-      const { error } = await supabase.from("actions_quranium_fav").insert({
-        user_id: user.id,
-        surah_id: chapter_id,
-      });
-
-      if (error) {
-        console.log("Error adding favorite", error);
-      } else {
-        setFavorites([...favorites, { surah_id: chapter_id }]);
-      }
-    }
+    const switcher = await switchFav(chapter_id, user.id);
+    setFavorites(switcher);
 
     setloadingFav(true);
-    // setloadingSave(true);
   };
 
   const toggleSave = async (chapter_id) => {
-    // setloadingFav(false);
     setloadingSave(false);
 
-    const isSave = saves.some((save) => save.surah_id === chapter_id);
+    const switcher = await switchSave(chapter_id, user.id);
+    setSaves(switcher);
 
-    if (isSave) {
-      const { error } = await supabase
-        .from("actions_quranium_save")
-        .delete()
-        .eq("surah_id", chapter_id)
-        .eq("user_id", user.id);
-
-      if (error) {
-        console.log("Error removing save", error);
-      } else {
-        setSaves(saves.filter((save) => save.surah_id !== chapter_id));
-      }
-    } else {
-      const { error } = await supabase.from("actions_quranium_save").insert({
-        user_id: user.id,
-        surah_id: chapter_id,
-      });
-
-      if (error) {
-        console.log("Error adding save", error);
-      } else {
-        setSaves([...saves, { surah_id: chapter_id }]);
-      }
-    }
-
-    // setloadingFav(true);
     setloadingSave(true);
   };
 
@@ -230,11 +151,16 @@ const Chapter = ({ surah, length, status }) => {
       <AnimatePresence mode="wait" key={length}>
         <motion.div
           key={status}
-          variants={chapter}
+          variants={moveY}
           initial={"initial"}
           whileInView={"animate"}
           exit={"exit"}
-          viewport={{ once: true, amount: 0.5 }}
+          transition={{
+            duration: 0.5,
+            type: "spring",
+            delay: 1,
+          }}
+          viewport={{ once: true, amount: 0.3 }}
           className={`${Styles.item} `}
         >
           <SignedIn>

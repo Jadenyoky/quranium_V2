@@ -12,22 +12,20 @@ import { supabase } from "../../supabase";
 import Chapter from "./components/chapter";
 import store from "store2";
 
+import shadowImg from "../../assets/png/shadow.png";
+
 const Index = () => {
   const { user, isLoaded } = useUser();
   console.log(user, isLoaded);
 
-  const ss = store("sortStatus");
-  const cc = store("currentStatus");
+  const storeStatus = store("sortStatus");
+  const storeCurrent = store("currentStatus");
 
-  // const [sortStatus, setsortStatus] = useState("ترتيب المصحف");
-  // const [currentStatus, setcurrentStatus] = useState({
-  //   query: "id",
-  //   type: "asc",
-  // });
-
-  const [sortStatus, setsortStatus] = useState(ss ? ss : "ترتيب المصحف");
+  const [sortStatus, setsortStatus] = useState(
+    storeStatus ? storeStatus : "ترتيب المصحف"
+  );
   const [currentStatus, setcurrentStatus] = useState(
-    cc ? cc : { query: "id", type: "asc" }
+    storeCurrent ? storeCurrent : { query: "id", type: "asc" }
   );
 
   useEffect(() => {
@@ -43,6 +41,9 @@ const Index = () => {
   const [loading, setloading] = useState(false);
 
   const [num, setnum] = useState(0);
+  const changerNum = (n) => {
+    return setnum(n);
+  };
 
   const fetchChapters = async () => {
     setloading(false);
@@ -55,13 +56,15 @@ const Index = () => {
       currentStatus.type
     );
     setChapters(filter);
-    setnum(20);
+    changerNum(20);
 
     setloading(true);
   };
 
   const fetchSearch = async (query) => {
     setloading(false);
+
+    changerNum(20);
 
     const chaptersList = await getChapters();
     const sort = _.orderBy(
@@ -87,6 +90,8 @@ const Index = () => {
 
   const fetchSort = async (query, type) => {
     setloading(false);
+
+    changerNum(20);
 
     // const chaptersList = await getChapters();
     const filter = _.orderBy(chapters, query, type);
@@ -131,20 +136,21 @@ const Index = () => {
     }
   };
 
+  const handleScroll = () => {
+    if (
+      window.innerHeight + window.scrollY >=
+      document.body.offsetHeight - 1500
+    ) {
+      // setnum(num + 20);
+      changerNum(num + 20);
+    }
+  };
+
   useEffect(() => {
     fetchChapters();
   }, []);
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (
-        window.innerHeight + window.scrollY >=
-        document.body.offsetHeight - 1000
-      ) {
-        setnum(num + 20);
-      }
-    };
-
     window.addEventListener("scroll", handleScroll);
 
     return () => window.removeEventListener("scroll", handleScroll);
@@ -175,6 +181,12 @@ const Index = () => {
           </motion.div>
         </div>
       </motion.div>
+
+      <motion.div
+        variants={opacity}
+        transition={{ delay: 5 }}
+        className={`${Styles.headerShadow} `}
+      ></motion.div>
 
       <motion.div variants={opacity} className={`${Styles.content} `}>
         <motion.div variants={opacity} className={`${Styles.filter} `}>
@@ -235,25 +247,28 @@ const Index = () => {
         </motion.div>
 
         {chapters.length > 0 && isLoaded ? (
-          <motion.div
-            variants={moveY}
-            initial={"initial"}
-            animate={"animate"}
-            exit={"exit"}
-            className={`${Styles.surah} `}
-          >
-            {chapters.map(
-              (e, k) =>
-                k < num && (
-                  <Chapter
-                    length={numResults}
-                    key={k}
-                    surah={e}
-                    status={sortStatus}
-                  />
-                )
-            )}
-          </motion.div>
+          <AnimatePresence mode="wait" key={numResults}>
+            <motion.div
+              key={sortStatus}
+              variants={moveY}
+              initial={"initial"}
+              animate={"animate"}
+              exit={"exit"}
+              className={`${Styles.surah} `}
+            >
+              {chapters.map(
+                (e, k) =>
+                  k < num && (
+                    <Chapter
+                      length={numResults}
+                      key={k}
+                      surah={e}
+                      status={sortStatus}
+                    />
+                  )
+              )}
+            </motion.div>
+          </AnimatePresence>
         ) : (
           <AnimatePresence mode="wait">
             <motion.div

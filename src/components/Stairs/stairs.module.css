@@ -3,13 +3,14 @@
   color: white;
 
   background-color: coral;
-  padding: 20px;
+  padding: 40px;
   border-radius: 28% 72% 49% 51% / 85% 20% 80% 15%;
 
   box-shadow: 10px 10px 0px var(--shadow-text-stairs);
 
-  font-family: 'titles';
-  /* font-weight: lighter; */
+  font-family: tebian;
+  font-weight: lighter;
+
 }
 
 .stairs {

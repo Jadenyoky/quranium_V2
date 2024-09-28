@@ -60,7 +60,7 @@ export const moveY = {
     y: "0",
     transition: {
       when: "beforeChildren",
-      staggerChildren: 0.5,
+      staggerChildren: 0.04,
     },
   },
   exit: {

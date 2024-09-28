@@ -8,14 +8,17 @@ import {
   faUser as userSolid,
 } from "@fortawesome/free-solid-svg-icons";
 import { faUser as userReg } from "@fortawesome/free-regular-svg-icons";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence, useScroll } from "framer-motion";
 import { BottomNavigation, BottomNavigationAction } from "@mui/material";
 import { scale, scaleProfile } from "./anim";
 import { SignedOut, SignedIn, useUser } from "@clerk/clerk-react";
+import ThemeToggleTest from "../Theme-toggle-test";
 
 export default function BottomNav() {
   const { pathname } = useLocation();
-  const { isLoaded } = useUser();
+  const { user, isLoaded, isSignedIn } = useUser();
+
+  console.log(user);
 
   const navi = useNavigate();
   const [value, setValue] = useState(null);
@@ -24,8 +27,8 @@ export default function BottomNav() {
     {
       name: "home",
       path: "/",
-      icon: "fi fi-rs-home",
-      active: "fi fi-sr-home",
+      icon: <i className="fi fi-rs-home"></i>,
+      active: <i className="fi fi-sr-home"></i>,
       title: "الرئيسية",
       navigate: () => {
         navi("/", { state: { title: "الرئيسية" } });
@@ -34,28 +37,50 @@ export default function BottomNav() {
     {
       name: "read",
       path: "/read",
-      icon: "fi fi-rs-diary-bookmarks",
-      active: "fi fi-sr-diary-bookmarks",
+      icon: <i className="fi fi-rs-diary-bookmarks"></i>,
+      active: <i className="fi fi-sr-diary-bookmarks"></i>,
       title: "قراءة",
       navigate: () => {
         navi("/read", { state: { title: "قراءة" } });
       },
     },
     {
-      name: "contact",
-      path: "/contact",
-      icon: "fi fi-rs-search",
-      active: "fi fi-sr-search",
-      title: "بحث",
+      name: "profile",
+      path: "/profile",
+      icon:
+        isSignedIn && isLoaded ? (
+          <div>
+            <img src={user?.imageUrl} />
+          </div>
+        ) : (
+          <i className="fi fi-rs-user"></i>
+        ),
+      active:
+        isSignedIn && isLoaded ? (
+          <div>
+            <img src={user?.imageUrl} />
+          </div>
+        ) : (
+          <i className="fi fi-sr-user"></i>
+        ),
+      title: (
+        <p className="m-0 overflow-hidden whitespace-nowrap ">
+          {isSignedIn && isLoaded ? user.firstName : "الملف الشخصي"}
+        </p>
+      ),
       navigate: () => {
-        navi("/contact", { state: { title: "بحث" } });
+        navi("/profile", {
+          state: {
+            title: isSignedIn && isLoaded ? user.firstName : "الملف الشخصي",
+          },
+        });
       },
     },
     {
       name: "posts",
       path: "/posts",
-      icon: "fi fi-rs-grid",
-      active: "fi fi-sr-grid",
+      icon: <i className="fi fi-rs-grid"></i>,
+      active: <i className="fi fi-sr-grid"></i>,
       title: "المزيد",
       navigate: () => {
         navi("/posts", { state: { title: "المزيد" } });
@@ -77,6 +102,20 @@ export default function BottomNav() {
     }
   }, [pathname]);
 
+  const { scrollY } = useScroll();
+
+  const handleScroll = () => {
+    if (window.scrollY >= 100) {
+      console.log("scrolling", scrollY.current);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [scrollY]);
+
   return (
     <>
       <motion.div
@@ -88,55 +127,6 @@ export default function BottomNav() {
         exit="exit"
         transition="transition"
       >
-        {isLoaded ? (
-          <div>
-            <SignedOut>
-              <motion.div
-                variants={scaleProfile}
-                whileTap={{ scale: 0.9 }}
-                className={Styles.profileLogin}
-                onClick={() =>
-                  navi("/profile", { state: { title: "Profile" } })
-                }
-              >
-                <FontAwesomeIcon
-                  className={Styles.icon}
-                  icon={userReg}
-                  size="2x"
-                />
-              </motion.div>
-            </SignedOut>
-            <SignedIn>
-              <motion.div
-                variants={scaleProfile}
-                whileTap={{ scale: 0.9 }}
-                className={Styles.profile}
-                onClick={() =>
-                  navi("/profile", { state: { title: "Profile" } })
-                }
-              >
-                <FontAwesomeIcon
-                  className={Styles.icon}
-                  icon={userSolid}
-                  size="2x"
-                />
-              </motion.div>
-            </SignedIn>
-          </div>
-        ) : (
-          <motion.div
-            variants={scaleProfile}
-            whileTap={{ scale: 0.9 }}
-            className={Styles.profile}
-          >
-            <FontAwesomeIcon
-              className={Styles.icon}
-              icon={faSpinner}
-              size="2x"
-              beatFade
-            />
-          </motion.div>
-        )}
         <BottomNavigation
           value={value}
           onChange={(event, newValue) => {
@@ -149,15 +139,37 @@ export default function BottomNav() {
               <BottomNavigationAction
                 className={`${Styles.navLinks} ${
                   value === e.name && Styles.active
-                }`}
+                }
+                `}
                 key={k}
                 label={e.title}
                 value={e.name}
-                icon={<i className={value === e.name ? e.active : e.icon}></i>}
+                icon={
+                  // <i
+                  //   className={
+                  //     value === e.name ? "fi fi-sr-grid" : "fi fi-rs-grid"
+                  //   }
+                  // ></i>
+                  value === e.name ? e.active : e.icon
+                }
                 onClick={e.navigate}
               />
             );
           })}
+
+          <AnimatePresence mode="wait">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{
+                duration: 0.5,
+                delay: 1,
+                ease: [0.215, 0.61, 0.355, 1],
+              }}
+            >
+              <ThemeToggleTest />
+            </motion.div>
+          </AnimatePresence>
         </BottomNavigation>
       </motion.div>
     </>

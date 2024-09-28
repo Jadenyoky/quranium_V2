@@ -27,7 +27,7 @@ export default function Layout({ children }) {
           zIndex: 10003,
         }}
       >
-        {location.state ? location.state.title : "مرحبًا بعودتك .."} ..
+        {location.state ? location.state.title : "مرحبًا بعودتك .."}
       </motion.div>
       <div className={Styles.stairs}>
         <motion.div
