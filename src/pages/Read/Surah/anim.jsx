@@ -7,7 +7,7 @@ export const animPage = {
     transition: {
       delay: 0.5,
       when: "beforeChildren",
-      staggerChildren: 1,
+      staggerChildren: 0.5,
     },
   },
 };

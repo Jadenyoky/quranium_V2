@@ -76,14 +76,18 @@
 
     i {
       background-color: var(--secondary);
+
       color: white;
       border-radius: inherit;
       opacity: 1;
     }
 
     div {
+      border-radius: 50px;
+      color: var(--primary);
+
       img {
-        outline: 3px solid;
+        outline: 2px solid;
       }
     }
 

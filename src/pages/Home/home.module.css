@@ -115,6 +115,6 @@
   }
 
   .first {
-    /* grid-template-columns: auto !important; */
+    grid-template-columns: auto !important;
   }
 }

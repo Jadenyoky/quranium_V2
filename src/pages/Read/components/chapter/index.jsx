@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { SignedIn, useUser, SignedOut } from "@clerk/clerk-react";
-import { scaleItem, actionsAnim, actionsIcon, scale, chapter } from "./anim";
+import { actionsAnim, actionsIcon, scale, moveY } from "./anim";
 import Styles from "./chapter.module.css";
 import { useNavigate } from "react-router-dom";
-import { supabase } from "../../../../supabase";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBookmark, faStar } from "@fortawesome/free-regular-svg-icons";
 import {
@@ -14,10 +13,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import _ from "lodash";
 import { fav, save, switchFav, switchSave } from "../../../../api";
-import { moveY } from "../../anim";
 
 const Chapter = ({ surah, length, status }) => {
-  const { user, isLoaded } = useUser();
+  const { user } = useUser();
   const navi = useNavigate();
 
   const [favorites, setFavorites] = useState([]);
@@ -142,6 +140,14 @@ const Chapter = ({ surah, length, status }) => {
     setloadingSave(true);
   };
 
+  const handleNavigate = () => {
+    navi(`/read/${surah.id}`, {
+      state: {
+        title: `${surah.name_arabic}`,
+      },
+    });
+  };
+
   useEffect(() => {
     fetchActions();
   }, [user]);
@@ -205,11 +211,7 @@ const Chapter = ({ surah, length, status }) => {
             whileTap={{ scale: 0.95 }}
             className={`${Styles.titlesurah} `}
             onClick={() => {
-              navi(`/read/${surah.id}`, {
-                state: {
-                  title: `${surah.name_arabic}`,
-                },
-              });
+              handleNavigate();
             }}
           >
             <div className={`${Styles.icon} `}>

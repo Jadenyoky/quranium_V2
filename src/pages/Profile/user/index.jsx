@@ -17,7 +17,7 @@ const Index = () => {
 
   return (
     <>
-      <SignRequire />
+      {/* <SignRequire /> */}
       <SignedIn>
         <motion.div
           initial={{ opacity: 0 }}

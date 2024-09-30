@@ -13,6 +13,8 @@
   --success-content: #000000;
   --warning-content: #000000;
   --error-content: #fdf3f3;
+
+  --navbottom-height: 70px;
 }
 
 .light {

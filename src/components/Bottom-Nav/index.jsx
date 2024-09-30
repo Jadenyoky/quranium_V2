@@ -102,20 +102,6 @@ export default function BottomNav() {
     }
   }, [pathname]);
 
-  const { scrollY } = useScroll();
-
-  const handleScroll = () => {
-    if (window.scrollY >= 100) {
-      console.log("scrolling", scrollY.current);
-    }
-  };
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [scrollY]);
-
   return (
     <>
       <motion.div

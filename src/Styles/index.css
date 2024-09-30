@@ -45,8 +45,16 @@ body {
 /* scrollbar style */
 .os-theme-dark {
   background-color: var(--scrollbar-bg);
+  visibility: var(--scroll-visibility);
 
   .os-scrollbar-handle {
     background-color: var(--scrollbar);
+
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .os-theme-dark {
+    visibility: hidden !important;
   }
 }

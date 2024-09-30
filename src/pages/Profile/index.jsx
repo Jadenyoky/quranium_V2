@@ -21,7 +21,7 @@ const Index = () => {
 
   return (
     <div>
-      <SignRequire />
+      {/* <SignRequire /> */}
       <SignedIn>
         <motion.div
           variants={allPage}

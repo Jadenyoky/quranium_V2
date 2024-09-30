@@ -71,3 +71,22 @@ export const chapter = {
     opacity: 0,
   },
 };
+
+export const moveY = {
+  initial: {
+    opacity: 0,
+    y: "50px",
+  },
+  animate: {
+    opacity: 1,
+    y: "0",
+    transition: {
+      when: "beforeChildren",
+      staggerChildren: 0.04,
+    },
+  },
+  exit: {
+    opacity: 0,
+    y: "50px",
+  },
+};

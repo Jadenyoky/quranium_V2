@@ -1,5 +1,7 @@
 import axios from "axios";
 import { supabase } from "../supabase";
+import _ from "lodash";
+import { useUser } from "@clerk/clerk-react";
 
 // دالة GET لجلب قائمة المستخدمين
 export const getUsers = async () => {
@@ -135,4 +137,27 @@ export const switchSave = async (chapter_id, user_id) => {
       return [...saveList, { surah_id: chapter_id }];
     }
   }
+};
+
+export const addActions = async (id, chapters) => {
+  const favs = await fav(id);
+  const saves = await save(id);
+
+  const updatedChapters = _.map(chapters, (chapter) => {
+    // البحث عن البوست في المفضلة
+    const favChapter = _.find(favs, (fav) => fav.surah_id === chapter.id);
+
+    // البحث عن البوست في الحفظ
+    const saveChapter = _.find(saves, (save) => save.surah_id === chapter.id);
+
+    return {
+      ...chapter,
+      isFavorited: !!favChapter, // إذا كان موجودًا في المفضلة، إضافة `isFavorited: true`، وإذا لم يكن، `false`
+      favoriteDate: favChapter ? favChapter.created : null, // إذا كان موجودًا، أضف تاريخ التفضيل، وإلا `null`
+      isSaved: !!saveChapter, // إذا كان موجودًا في المحفوظة، إضافة `isSaved: true`، وإذا لم يكن، `false`
+      saveDate: saveChapter ? saveChapter.created : null, // إذا كان موجودًا، أضف تاريخ الحفظ، وإلا `null`
+    };
+  });
+
+  console.log(updatedChapters);
 };

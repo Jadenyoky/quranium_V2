@@ -1,21 +1,22 @@
 import React, { useEffect, useRef, useState } from "react";
 import Styles from "./read.module.css";
-import { AnimatePresence, motion, useScroll } from "framer-motion";
-import { animPage, scale, moveY, opacity, scaleItem, scaleModal } from "./anim";
-import { Modal } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import {
+  AnimatePresence,
+  motion,
+  useScroll,
+  useTransform,
+} from "framer-motion";
+import { animPage, scale, moveY, opacity as show, scaleModal } from "./Surah/anim";
+import { useLocation, useNavigate } from "react-router-dom";
 import { getChapters } from "../../api";
 import _ from "lodash";
-import { SignedIn, useUser } from "@clerk/clerk-react";
-import { supabase } from "../../supabase";
+import { useUser } from "@clerk/clerk-react";
 
 import Chapter from "./components/chapter";
 import store from "store2";
 
-import shadowImg from "../../assets/png/shadow.png";
-
 const Index = () => {
-  const { user, isLoaded } = useUser();
+  const { user, isLoaded, isSignedIn } = useUser();
   console.log(user, isLoaded);
 
   const storeStatus = store("sortStatus");
@@ -49,13 +50,16 @@ const Index = () => {
     setloading(false);
 
     const chaptersList = await getChapters();
+
     // setChapters(chaptersList);
     const filter = _.orderBy(
       chaptersList,
       currentStatus.query,
       currentStatus.type
     );
+
     setChapters(filter);
+
     changerNum(20);
 
     setloading(true);
@@ -91,11 +95,14 @@ const Index = () => {
   const fetchSort = async (query, type) => {
     setloading(false);
 
+    scrollTo({ top: 0, behavior: "smooth" });
     changerNum(20);
 
-    // const chaptersList = await getChapters();
-    const filter = _.orderBy(chapters, query, type);
-    setChapters(filter);
+    setTimeout(() => {
+      // const chaptersList = await getChapters();
+      const filter = _.orderBy(chapters, query, type);
+      setChapters(filter);
+    }, 500);
 
     setloading(true);
   };
@@ -156,138 +163,159 @@ const Index = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [num]);
 
+  const { pathname } = useLocation();
+  useEffect(() => {
+    changerNum(0);
+  }, [pathname]);
+
+  const { scrollY } = useScroll();
+
+  const opacity = useTransform(scrollY, [0, 10], [1, 0]);
+  const scaleY = useTransform(scrollY, [0, 15], [1, 0]);
+
   return (
-    <motion.div
-      variants={animPage}
-      initial="initial"
-      animate="animate"
-      className={`${Styles.page} `}
-    >
-      <motion.div variants={opacity} className={`${Styles.header} `}>
-        <div className={`${Styles.title} `}>
-          <h1>سور القرآن الكريم</h1>
-          <i className="fi fi-sr-book-bookmark"></i>
-        </div>
-        <div>
-          <motion.div
-            variants={scale}
-            whileTap={{ scale: 0.9 }}
-            className={`${Styles.back} `}
-            onClick={() => {
-              navi(-1);
-            }}
-          >
-            <i className="fi fi-rs-angle-small-left"></i>
-          </motion.div>
-        </div>
-      </motion.div>
-
+    <>
+      {" "}
       <motion.div
-        variants={opacity}
-        transition={{ delay: 5 }}
-        className={`${Styles.headerShadow} `}
-      ></motion.div>
+        variants={animPage}
+        initial="initial"
+        animate="animate"
+        className={`${Styles.page} `}
+      >
+        <motion.div
+          variants={show}
+          className={`${Styles.header} `}
+          style={{
+            opacity,
+            scaleY,
+          }}
+        >
+          <div className={`${Styles.title} `}>
+            <h1>سور القرآن الكريم</h1>
+            <i className="fi fi-sr-book-bookmark"></i>
+          </div>
+          <div>
+            <motion.div
+              variants={scale}
+              whileTap={{ scale: 0.9 }}
+              className={`${Styles.back} `}
+              onClick={() => {
+                navi(-1);
+              }}
+            >
+              <i className="fi fi-rs-angle-small-left"></i>
+            </motion.div>
+          </div>
+        </motion.div>
 
-      <motion.div variants={opacity} className={`${Styles.content} `}>
-        <motion.div variants={opacity} className={`${Styles.filter} `}>
-          <div className={`${Styles.search} `}>
-            <div>
-              <i className="fi fi-rs-search"></i>
+        <motion.div
+          variants={show}
+          transition={{ delay: 5 }}
+          className={`${Styles.headerShadow} `}
+        ></motion.div>
+
+        <motion.div variants={show} className={`${Styles.content} `}>
+          <motion.div variants={show} className={`${Styles.filter} `}>
+            <div className={`${Styles.search} `}>
+              <div>
+                <i className="fi fi-rs-search"></i>
+              </div>
+              <div>
+                <input
+                  type="text"
+                  placeholder="بحث عن سورة"
+                  onChange={(e) => {
+                    fetchSearch(e.target.value);
+                  }}
+                />
+
+                <span>
+                  {numResults !== null && (
+                    <motion.span
+                      key={numResults}
+                      variants={scale}
+                      initial="initial"
+                      animate="animate"
+                      exit="exit"
+                    >
+                      {numResults}
+                    </motion.span>
+                  )}
+                </span>
+              </div>
             </div>
-            <div>
-              <input
-                type="text"
-                placeholder="بحث عن سورة"
-                onChange={(e) => {
-                  fetchSearch(e.target.value);
-                }}
-              />
 
-              <span>
-                {numResults !== null && (
+            <motion.div
+              whileTap={{ scale: 0.9 }}
+              className={`${Styles.sort} `}
+              onClick={() => {
+                sortSwitcher();
+              }}
+            >
+              <div>
+                {sortStatus !== null && (
                   <motion.span
-                    key={numResults}
+                    key={sortStatus}
                     variants={scale}
                     initial="initial"
                     animate="animate"
                     exit="exit"
                   >
-                    {numResults}
+                    {sortStatus}
                   </motion.span>
                 )}
-              </span>
-            </div>
-          </div>
+              </div>
 
-          <motion.div
-            whileTap={{ scale: 0.9 }}
-            className={`${Styles.sort} `}
-            onClick={() => {
-              sortSwitcher();
-            }}
-          >
-            <div>
-              {sortStatus !== null && (
-                <motion.span
-                  key={sortStatus}
-                  variants={scale}
-                  initial="initial"
-                  animate="animate"
-                  exit="exit"
-                >
-                  {sortStatus}
-                </motion.span>
-              )}
-            </div>
-
-            <div>
-              <i className="fi fi-br-bars-sort"></i>
-            </div>
+              <div>
+                <i className="fi fi-br-bars-sort"></i>
+              </div>
+            </motion.div>
           </motion.div>
-        </motion.div>
 
-        {chapters.length > 0 && isLoaded ? (
-          <AnimatePresence mode="wait" key={numResults}>
-            <motion.div
-              key={sortStatus}
-              variants={moveY}
-              initial={"initial"}
-              animate={"animate"}
-              exit={"exit"}
-              className={`${Styles.surah} `}
-            >
-              {chapters.map(
-                (e, k) =>
-                  k < num && (
-                    <Chapter
-                      length={numResults}
-                      key={k}
-                      surah={e}
-                      status={sortStatus}
-                    />
-                  )
-              )}
-            </motion.div>
-          </AnimatePresence>
-        ) : (
-          <AnimatePresence mode="wait">
-            <motion.div
-              variants={scaleModal}
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              transition={{ duration: 0.5 }}
-              className="fixed left-2/4 top-2/4 translate-x-[-50%] text-2xl"
-              style={{
-                fontFamily: "tebian",
-              }}
-            >
-              لا يوجد نتائج
-            </motion.div>
-          </AnimatePresence>
-        )}
+          {chapters.length > 0 && isLoaded ? (
+            <AnimatePresence mode="wait" key={numResults}>
+              <motion.div
+                key={sortStatus}
+                variants={moveY}
+                initial={"initial"}
+                animate={"animate"}
+                exit={"exit"}
+                className={`${Styles.surah} `}
+              >
+                {chapters.map(
+                  (e, k) =>
+                    k < num && (
+                      <Chapter
+                        opacity={opacity}
+                        length={numResults}
+                        key={k}
+                        surah={e}
+                        status={sortStatus}
+                      />
+                    )
+                )}
+              </motion.div>
+            </AnimatePresence>
+          ) : (
+            <AnimatePresence mode="wait">
+              <motion.div
+                variants={scaleModal}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                transition={{ duration: 0.5 }}
+                className="fixed left-2/4 top-2/4 translate-x-[-50%] text-2xl"
+                style={{
+                  fontFamily: "tebian",
+                }}
+              >
+                لا يوجد نتائج
+              </motion.div>
+            </AnimatePresence>
+          )}
+        </motion.div>
       </motion.div>
-    </motion.div>
+    </>
   );
 };
 
