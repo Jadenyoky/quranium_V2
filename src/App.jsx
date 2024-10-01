@@ -17,8 +17,8 @@ import Home from "./pages/Home";
 import Read from "./pages/Read";
 import Surah from "./pages/Read/Surah";
 import Profile from "./pages/Profile";
-
 import User from "./pages/Profile/user";
+
 import { SignedOut } from "@clerk/clerk-react";
 import SignRequire from "./components/Signed-Out";
 
@@ -82,6 +82,13 @@ function App() {
       scrollBarShow("auto");
     }, 700);
   }, [[], location.pathname]);
+
+  const movetoY = {
+    initial: { opacity: 0, y: 10 },
+    animate: { opacity: 1, y: 0 },
+    exit: { opacity: 0, y: -20 },
+  };
+
   return (
     <>
       <BottomNav />
@@ -92,14 +99,20 @@ function App() {
       )}
 
       <AnimatePresence mode="wait">
-        <motion.div key={location.pathname}>
-          <Stairs>
-            <Routes location={location} key={location.pathname}>
-              {routes.map(({ path, component }) => (
-                <Route key={path} path={path} element={component} />
-              ))}
-            </Routes>
-          </Stairs>
+        <motion.div
+          key={location.pathname}
+          variants={movetoY}
+          initial="initial"
+          animate="animate"
+          exit="exit"
+        >
+          {/* <Stairs> */}
+          <Routes location={location} key={location.pathname}>
+            {routes.map(({ path, component }) => (
+              <Route key={path} path={path} element={component} />
+            ))}
+          </Routes>
+          {/* </Stairs> */}
         </motion.div>
       </AnimatePresence>
     </>
