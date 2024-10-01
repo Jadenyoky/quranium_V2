@@ -26,6 +26,7 @@
     flex-wrap: wrap;
     justify-content: center;
     padding: 0 20px;
+    
 
     .title {
       /* background-color: var(--primary); */
@@ -39,7 +40,6 @@
       font-family: tebian;
       color: var(--primary-content);
       margin-right: 50px;
-      height: 60px;
 
       h1 {
         position: relative;
@@ -170,6 +170,7 @@
         }
 
         p {
+          /* display: inline-block; */
           width: 40px;
           color: var(--copy-lighter);
         }

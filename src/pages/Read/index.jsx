@@ -8,7 +8,7 @@ import {
 } from "framer-motion";
 import {
   animPage,
-  scale,
+  scale as scaleItem,
   moveY,
   opacity as show,
   scaleModal,
@@ -102,7 +102,7 @@ const Index = () => {
   const fetchSort = async (query, type) => {
     setloading(false);
 
-    scrollTo({ top: 0, behavior: "smooth" });
+    scrollTo({ top: 42 });
     changerNum(20);
 
     setTimeout(() => {
@@ -178,7 +178,8 @@ const Index = () => {
   const { scrollY } = useScroll();
 
   const opacity = useTransform(scrollY, [0, 30], [1, 0]);
-  const translateY = useTransform(scrollY, [0, 60], [0, -100]);
+  const translateY = useTransform(scrollY, [0, 30], [0, -80]);
+  const scale = useTransform(scrollY, [30, 100], [1, 0.9]);
 
   return (
     <>
@@ -189,27 +190,25 @@ const Index = () => {
         animate="animate"
         className={`${Styles.page} `}
       >
-        <motion.div variants={show} className={`${Styles.header} `}>
-          <motion.div
-            className={`${Styles.title} `}
-            style={{
-              translateY,
-              opacity,
-            }}
-          >
+        <motion.div
+          style={{
+            translateY,
+            opacity,
+          }}
+          variants={show}
+          className={`${Styles.header} `}
+        >
+          <motion.div className={`${Styles.title} `}>
             <h1>سور القرآن الكريم</h1>
             <i className="fi fi-sr-book-bookmark"></i>
           </motion.div>
           <div>
             <motion.div
-              variants={scale}
+              variants={scaleItem}
               whileTap={{ scale: 0.9 }}
               className={`${Styles.back} `}
               onClick={() => {
                 navi(-1);
-              }}
-              style={{
-                opacity,
               }}
             >
               <i className="fi fi-rs-angle-small-left"></i>
@@ -225,7 +224,12 @@ const Index = () => {
 
         <motion.div variants={show} className={`${Styles.content} `}>
           <motion.div variants={show} className={`${Styles.filter} `}>
-            <div className={`${Styles.search} `}>
+            <motion.div
+              style={{
+                scale,
+              }}
+              className={`${Styles.search} `}
+            >
               <div>
                 <i className="fi fi-rs-search"></i>
               </div>
@@ -254,9 +258,12 @@ const Index = () => {
                   </AnimatePresence>
                 </p>
               </div>
-            </div>
+            </motion.div>
 
             <motion.div
+              style={{
+                scale,
+              }}
               whileTap={{ scale: 0.9 }}
               className={`${Styles.sort} `}
               onClick={() => {
@@ -267,7 +274,7 @@ const Index = () => {
                 {sortStatus !== null && (
                   <motion.span
                     key={sortStatus}
-                    variants={scale}
+                    variants={scaleItem}
                     initial="initial"
                     animate="animate"
                     exit="exit"
