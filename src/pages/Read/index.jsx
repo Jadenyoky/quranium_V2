@@ -6,7 +6,14 @@ import {
   useScroll,
   useTransform,
 } from "framer-motion";
-import { animPage, scale, moveY, opacity as show, scaleModal } from "./Surah/anim";
+import {
+  animPage,
+  scale,
+  moveY,
+  opacity as show,
+  scaleModal,
+  movetoY,
+} from "./anim";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getChapters } from "../../api";
 import _ from "lodash";
@@ -170,8 +177,8 @@ const Index = () => {
 
   const { scrollY } = useScroll();
 
-  const opacity = useTransform(scrollY, [0, 10], [1, 0]);
-  const scaleY = useTransform(scrollY, [0, 15], [1, 0]);
+  const opacity = useTransform(scrollY, [0, 30], [1, 0]);
+  const translateY = useTransform(scrollY, [0, 60], [0, -100]);
 
   return (
     <>
@@ -182,18 +189,17 @@ const Index = () => {
         animate="animate"
         className={`${Styles.page} `}
       >
-        <motion.div
-          variants={show}
-          className={`${Styles.header} `}
-          style={{
-            opacity,
-            scaleY,
-          }}
-        >
-          <div className={`${Styles.title} `}>
+        <motion.div variants={show} className={`${Styles.header} `}>
+          <motion.div
+            className={`${Styles.title} `}
+            style={{
+              translateY,
+              opacity,
+            }}
+          >
             <h1>سور القرآن الكريم</h1>
             <i className="fi fi-sr-book-bookmark"></i>
-          </div>
+          </motion.div>
           <div>
             <motion.div
               variants={scale}
@@ -201,6 +207,9 @@ const Index = () => {
               className={`${Styles.back} `}
               onClick={() => {
                 navi(-1);
+              }}
+              style={{
+                opacity,
               }}
             >
               <i className="fi fi-rs-angle-small-left"></i>
@@ -229,19 +238,21 @@ const Index = () => {
                   }}
                 />
 
-                <span>
-                  {numResults !== null && (
-                    <motion.span
-                      key={numResults}
-                      variants={scale}
-                      initial="initial"
-                      animate="animate"
-                      exit="exit"
-                    >
-                      {numResults}
-                    </motion.span>
-                  )}
-                </span>
+                <p>
+                  <AnimatePresence mode="popLayout">
+                    {numResults !== null && (
+                      <motion.p
+                        key={numResults}
+                        variants={movetoY}
+                        initial="initial"
+                        animate="animate"
+                        exit="exit"
+                      >
+                        {numResults}
+                      </motion.p>
+                    )}
+                  </AnimatePresence>
+                </p>
               </div>
             </div>
 

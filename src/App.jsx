@@ -12,7 +12,6 @@ import "./Styles/index.css";
 import Stairs from "./components/Stairs";
 // Components
 import BottomNav from "./components/Bottom-Nav";
-import ThemeToggle from "./components/Theme-Toggle";
 // Pages
 import Home from "./pages/Home";
 import Read from "./pages/Read";
@@ -93,19 +92,7 @@ function App() {
       )}
 
       <AnimatePresence mode="wait">
-        <motion.div
-          key={location.pathname}
-          // initial={{
-          //   opacity: 0,
-          // }}
-          // animate={{
-          //   opacity: 1,
-          //   transition: {
-          //     type: "spring",
-          //   },
-          // }}
-          // exit={{ opacity: 0 }}
-        >
+        <motion.div key={location.pathname}>
           <Stairs>
             <Routes location={location} key={location.pathname}>
               {routes.map(({ path, component }) => (
