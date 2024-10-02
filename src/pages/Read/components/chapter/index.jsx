@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { SignedIn, useUser, SignedOut } from "@clerk/clerk-react";
-import { actionsAnim, actionsIcon, scale, moveY } from "./anim";
+import { actionsAnim, actionsIcon, scale, moveY, movetoY } from "./anim";
 import Styles from "./chapter.module.css";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -15,22 +15,28 @@ import _ from "lodash";
 import { fav, save, switchFav, switchSave } from "../../../../api";
 
 const Chapter = ({ surah, length, status }) => {
+  // User info from clerk
   const { user } = useUser();
+
+  // Navigation to pages
   const navi = useNavigate();
 
+  // States for list of fav , save chapters and loading them
   const [favorites, setFavorites] = useState([]);
   const [saves, setSaves] = useState([]);
   const [loadingFav, setloadingFav] = useState(false);
   const [loadingSave, setloadingSave] = useState(false);
 
+  // To check if chapter is fav or not
   const isFav = (chapter_id) => {
     return favorites.some((fav) => fav.surah_id === chapter_id);
   };
-
+  // To check if chapter is save or not
   const isSave = (chapter_id) => {
     return saves.some((save) => save.surah_id === chapter_id);
   };
 
+  // Actions for chapter fav , save and loading to add or delete from list
   const actions = [
     {
       name: "fav",
@@ -67,7 +73,6 @@ const Chapter = ({ surah, length, status }) => {
       move: actionsIcon,
       action: () => {
         toggleFav(surah.id);
-        console.log("done fav");
       },
     },
     {
@@ -103,11 +108,11 @@ const Chapter = ({ surah, length, status }) => {
       move: actionsIcon,
       action: () => {
         toggleSave(surah.id);
-        console.log("done save");
       },
     },
   ];
 
+  // To get fav , save list if user is logged in
   const fetchActions = async () => {
     if (!user) {
       return console.log("User not found");
@@ -122,6 +127,7 @@ const Chapter = ({ surah, length, status }) => {
     setloadingSave(true);
   };
 
+  // To add or delete from fav , save list and loading until updating database
   const toggleFav = async (chapter_id) => {
     setloadingFav(false);
 
@@ -140,6 +146,7 @@ const Chapter = ({ surah, length, status }) => {
     setloadingSave(true);
   };
 
+  // To navigate to surah page and pass data
   const handleNavigate = () => {
     navi(`/read/${surah.id}`, {
       state: {
@@ -148,6 +155,7 @@ const Chapter = ({ surah, length, status }) => {
     });
   };
 
+  // To get actions list with updates by user changer
   useEffect(() => {
     fetchActions();
   }, [user]);

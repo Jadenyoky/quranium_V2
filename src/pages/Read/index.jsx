@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Styles from "./read.module.css";
 import {
   AnimatePresence,
@@ -18,14 +18,19 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { getChapters } from "../../api";
 import _ from "lodash";
 import { useUser } from "@clerk/clerk-react";
-
-import Chapter from "./components/chapter";
 import store from "store2";
 
-const Index = () => {
-  const { user, isLoaded, isSignedIn } = useUser();
-  console.log(user, isLoaded);
+import Chapter from "./components/chapter";
 
+const Index = () => {
+  // User info from clerk
+  const { user, isLoaded, isSignedIn } = useUser();
+
+  // Navigation to pages
+  const navi = useNavigate();
+  const { pathname } = useLocation();
+
+  // Store sort status and current status for chapters
   const storeStatus = store("sortStatus");
   const storeCurrent = store("currentStatus");
 
@@ -41,21 +46,27 @@ const Index = () => {
     store("currentStatus", currentStatus);
   }, [sortStatus, currentStatus]);
 
+  // Chapters list and number for control shown list
+  const [chapters, setChapters] = useState([]);
+  const [num, setnum] = useState(0);
+
+  // Number of results from search chapters
   const [numResults, setnumResults] = useState(null);
 
-  const navi = useNavigate();
+  // Transformation by scrolling
+  const { scrollY } = useScroll();
 
-  const [chapters, setChapters] = useState([]);
-  const [loading, setloading] = useState(false);
+  const opacity = useTransform(scrollY, [0, 30], [1, 0]);
+  const translateY = useTransform(scrollY, [0, 30], [0, -80]);
+  const scale = useTransform(scrollY, [30, 100], [1, 0.9]);
 
-  const [num, setnum] = useState(0);
+  // To change number of chapters shown
   const changerNum = (n) => {
     return setnum(n);
   };
 
+  // To get all chapters and sort them by storage sort status
   const fetchChapters = async () => {
-    setloading(false);
-
     const chaptersList = await getChapters();
 
     // setChapters(chaptersList);
@@ -68,13 +79,10 @@ const Index = () => {
     setChapters(filter);
 
     changerNum(20);
-
-    setloading(true);
   };
 
+  // To get result by word or number from all chapters and sort them by storage sort status
   const fetchSearch = async (query) => {
-    setloading(false);
-
     changerNum(20);
 
     const chaptersList = await getChapters();
@@ -95,14 +103,14 @@ const Index = () => {
     setChapters(filter);
 
     setnumResults(query !== "" ? filter.length : null);
-
-    setloading(true);
   };
 
+  // To sort all chapters by storage sort status
   const fetchSort = async (query, type) => {
-    setloading(false);
+    if (scrollY.current > 42) {
+      scrollTo({ top: 42 });
+    }
 
-    scrollTo({ top: 42 });
     changerNum(20);
 
     setTimeout(() => {
@@ -110,10 +118,9 @@ const Index = () => {
       const filter = _.orderBy(chapters, query, type);
       setChapters(filter);
     }, 500);
-
-    setloading(true);
   };
 
+  // To change storage sort status by storage current status and sort them
   const sortSwitcher = () => {
     switch (sortStatus) {
       case "ترتيب المصحف":
@@ -150,6 +157,7 @@ const Index = () => {
     }
   };
 
+  // To loading more chapters by scrolling
   const handleScroll = () => {
     if (
       window.innerHeight + window.scrollY >=
@@ -161,29 +169,22 @@ const Index = () => {
   };
 
   useEffect(() => {
-    fetchChapters();
-  }, []);
-
-  useEffect(() => {
     window.addEventListener("scroll", handleScroll);
 
     return () => window.removeEventListener("scroll", handleScroll);
   }, [num]);
 
-  const { pathname } = useLocation();
+  // To get all chapters when the page starts
+  useEffect(() => {
+    fetchChapters();
+  }, []);
+
   useEffect(() => {
     changerNum(0);
   }, [pathname]);
 
-  const { scrollY } = useScroll();
-
-  const opacity = useTransform(scrollY, [0, 30], [1, 0]);
-  const translateY = useTransform(scrollY, [0, 30], [0, -80]);
-  const scale = useTransform(scrollY, [30, 100], [1, 0.9]);
-
   return (
     <>
-      {" "}
       <motion.div
         variants={animPage}
         initial="initial"
@@ -261,13 +262,13 @@ const Index = () => {
             </motion.div>
 
             <motion.div
-              style={{
-                scale,
-              }}
-              whileTap={{ scale: 0.9 }}
+              whileTap={{}}
               className={`${Styles.sort} `}
               onClick={() => {
                 sortSwitcher();
+              }}
+              style={{
+                scale,
               }}
             >
               <div>
