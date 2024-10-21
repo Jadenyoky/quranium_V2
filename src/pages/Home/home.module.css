@@ -49,7 +49,7 @@
 
     /* border-radius: 24px 24px 0 0; */
 
-    padding-bottom: 100px;
+    padding-bottom: var(--navbottom-height);
 
 
     .first {
@@ -87,13 +87,12 @@
           left: 50%;
           transform: translate(-50%, 0);
           color: white;
-          font-family: 'titles';
-          /* font-family: tebian; */
-          text-shadow: 0 0 100px black;
-          /* font-weight: bold; */
-          font-size: 2rem;
+          /* font-family: 'titles'; */
+          font-family: tebian;
+          text-shadow: 0 0 50px black;
+          font-size: 1.5rem;
           background-color: inherit;
-          padding: 0px 20px;
+          padding: 5px 30px;
           border-radius: inherit;
 
           border-bottom: 5px solid var(--border);

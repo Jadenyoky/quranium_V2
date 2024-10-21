@@ -1,146 +1,32 @@
-.profilePage {
-  min-height: 100svh;
-  background-color: var(--primary-color);
-  color: white;
-  overflow-x: hidden;
+.test {
+  /* ضع مسار الصورة هنا */
+  background: url('https://plus.unsplash.com/premium_photo-1672201106204-58e9af7a2888?q=80&w=1471&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat;
+  background-position: top left;
+  font: 50px tebian;
+  overflow: hidden;
+  white-space: nowrap;
+  direction: ltr;
+  text-align: center;
+  text-overflow: ellipsis;
+  background-size: cover;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 100px var(--scrollbar));
+  transition: background 0.5s ease;
+}
 
-  /* padding-bottom: 60px; */
-  .title {
-    background-color: var(--primary-color);
-    color: white;
-    transition: 0.3s ease;
+.test:active {
+  cursor: pointer;
+  background-position: center 100%;
+}
 
-  }
-
-  .userName {
-    background-color: #00A79D;
-
-    span {
-      color: white;
-      font-weight: bold;
-    }
-  }
-
-  .content {
-    display: flex;
-    min-height: calc(100svh - 40px);
-
-    justify-content: center;
-    flex-direction: column;
-    gap: 20px;
-    padding: 40px 10px 100px 10px;
-    margin-top: -24px;
-
-    background-color: var(--background-color);
-
-    .box {
-      display: flex;
-      gap: 20px;
-      margin: 0 auto;
-      width: 600px;
-      border-radius: 24px;
-
-      .one,
-      .two,
-      .three,
-      .four {
-        height: 150px;
-        width: 300px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-wrap: wrap;
-        font-weight: bold;
-        font-size: 24px;
-        border-radius: 16px;
-        flex-grow: 1;
-        box-shadow: 0 0 100px var(--background-color);
-        text-shadow: 0 0 10px black;
-        cursor: pointer;
-        position: relative;
-
-      }
-
-      .one {
-        background-color: var(--bg-stairs);
-
-
-        p {
-          z-index: 1;
-        }
-
-        svg {
-          opacity: 0.5;
-          position: absolute;
-          top: 10px;
-          left: 30px;
-          height: 70%;
-          color: black;
-        }
-      }
-
-      .two {
-        background-color: var(--primary-color);
-
-        p {
-          z-index: 1;
-        }
-
-        svg {
-          opacity: 0.5;
-          position: absolute;
-          bottom: 0px;
-          right: 20px;
-          height: 70%;
-          color: black;
-        }
-      }
-
-      .three {
-
-        background-color: rgba(255, 127, 80, 0.247);
-
-        p {
-          z-index: 1;
-        }
-
-        svg {
-          opacity: 0.5;
-          position: absolute;
-          top: 10px;
-          left: 30px;
-          height: 70%;
-          color: black;
-          transform: rotate(-10deg);
-
-        }
-      }
-
-      .four {
-        background-color: grey;
-
-        p {
-          z-index: 1;
-        }
-
-        svg {
-          opacity: 0.5;
-          position: absolute;
-          bottom: 0px;
-          right: 0px;
-          height: 70%;
-          color: black;
-          transform: rotate(-20deg);
-        }
-      }
-    }
-  }
-
+.container {
+  /* min-height: 500svh; */
+  background: var(--true) no-repeat;
+  transition: background 0.5s ease;
 
 }
 
-@media screen and (max-width: 750px) {
-  .box {
-    width: 95% !important;
-  }
+.container:hover {
+  background-position: center 100%;
 }

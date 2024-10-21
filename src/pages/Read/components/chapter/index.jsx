@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { SignedIn, useUser, SignedOut } from "@clerk/clerk-react";
-import { actionsAnim, actionsIcon, scale, moveY, movetoY } from "./anim";
+import {
+  actionsAnim,
+  actionsIcon,
+  scale,
+  moveY_Element,
+} from "../../../../Styles/anim";
 import Styles from "./chapter.module.css";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -13,8 +18,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import _ from "lodash";
 import { fav, save, switchFav, switchSave } from "../../../../api";
+import { useInView } from "react-intersection-observer";
 
-const Chapter = ({ surah, length, status }) => {
+const Chapter = ({ surah, length, status, index, load, number }) => {
   // User info from clerk
   const { user } = useUser();
 
@@ -160,14 +166,34 @@ const Chapter = ({ surah, length, status }) => {
     fetchActions();
   }, [user]);
 
+  const { ref, inView, entry } = useInView({
+    threshold: 0.1,
+    triggerOnce: false,
+  });
+
+  const middleIndex = Math.floor(number / 2) - 1;
+
+  useEffect(() => {
+    if (inView) {
+      console.log(index, entry.target);
+      console.log(middleIndex, index);
+
+      if (index > middleIndex) {
+        console.log("finally");
+        load((prev) => prev + 20);
+      }
+    }
+  }, [inView]);
+
   return (
     <>
       <AnimatePresence mode="wait" key={length}>
         <motion.div
+          ref={ref}
           key={status}
-          variants={moveY}
+          variants={moveY_Element}
           initial={"initial"}
-          whileInView={"animate"}
+          animate={inView ? "animate" : "initial"}
           exit={"exit"}
           transition={{
             duration: 0.5,

@@ -1,11 +1,8 @@
 import React from "react";
+import Styles from "./page.module.css";
 
 const Index = () => {
-  return (
-    <div>
-      <h1>Contact</h1>
-    </div>
-  );
+  return <div></div>;
 };
 
 export default Index;

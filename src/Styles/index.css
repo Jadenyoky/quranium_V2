@@ -12,10 +12,10 @@
   src: url(../assets/Fonts/thuluth1.ttf);
 }
 
-@font-face {
+/* @font-face {
   font-family: "surah";
   src: url(../assets/Fonts/sura_names.woff2);
-}
+} */
 
 @font-face {
   font-family: "noto";

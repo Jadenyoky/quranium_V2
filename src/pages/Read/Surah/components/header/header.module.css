@@ -1,0 +1,8 @@
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  mask: url(../../../../../assets/png/quran.png) no-repeat center / cover;
+  height: 100px;
+  background-color: red;
+}

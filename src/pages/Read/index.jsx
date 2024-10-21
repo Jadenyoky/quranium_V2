@@ -2,25 +2,28 @@ import React, { useEffect, useState } from "react";
 import Styles from "./read.module.css";
 import {
   AnimatePresence,
+  delay,
   motion,
   useScroll,
   useTransform,
 } from "framer-motion";
 import {
-  animPage,
+  animPageOpacity,
   scale as scaleItem,
-  moveY,
+  moveY_Element,
   opacity as show,
   scaleModal,
-  movetoY,
-} from "./anim";
+  movetoY_10,
+} from "../../Styles/anim";
 import { useLocation, useNavigate } from "react-router-dom";
-import { getChapters } from "../../api";
+import { chapter, fontSurahName } from "../../api";
 import _ from "lodash";
 import { useUser } from "@clerk/clerk-react";
 import store from "store2";
 
 import Chapter from "./components/chapter";
+import { useInView } from "react-intersection-observer";
+import { FixedSizeList as List } from "react-window";
 
 const Index = () => {
   // User info from clerk
@@ -48,7 +51,7 @@ const Index = () => {
 
   // Chapters list and number for control shown list
   const [chapters, setChapters] = useState([]);
-  const [num, setnum] = useState(0);
+  const [num, setnum] = useState(null);
 
   // Number of results from search chapters
   const [numResults, setnumResults] = useState(null);
@@ -67,7 +70,9 @@ const Index = () => {
 
   // To get all chapters and sort them by storage sort status
   const fetchChapters = async () => {
-    const chaptersList = await getChapters();
+    await fontSurahName();
+
+    const chaptersList = await chapter.getChapters();
 
     // setChapters(chaptersList);
     const filter = _.orderBy(
@@ -85,7 +90,7 @@ const Index = () => {
   const fetchSearch = async (query) => {
     changerNum(20);
 
-    const chaptersList = await getChapters();
+    const chaptersList = await chapter.getChapters();
     const sort = _.orderBy(
       chaptersList,
       currentStatus.query,
@@ -114,7 +119,7 @@ const Index = () => {
     changerNum(20);
 
     setTimeout(() => {
-      // const chaptersList = await getChapters();
+      // const chaptersList = await chapter.getChapters();
       const filter = _.orderBy(chapters, query, type);
       setChapters(filter);
     }, 500);
@@ -157,36 +162,30 @@ const Index = () => {
     }
   };
 
-  // To loading more chapters by scrolling
-  const handleScroll = () => {
-    if (
-      window.innerHeight + window.scrollY >=
-      document.body.offsetHeight - 1500
-    ) {
-      // setnum(num + 20);
-      changerNum(num + 20);
-    }
-  };
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [num]);
-
   // To get all chapters when the page starts
   useEffect(() => {
     fetchChapters();
   }, []);
 
   useEffect(() => {
-    changerNum(0);
+    changerNum(20);
   }, [pathname]);
+
+  const { ref, inView } = useInView({
+    threshold: 0.1,
+    triggerOnce: true,
+    rootMargin: `${document.body.scrollHeight / 4}px`,
+    onChange: (inView) => {
+      if (inView) {
+        changerNum(num + 20);
+      }
+    },
+  });
 
   return (
     <>
       <motion.div
-        variants={animPage}
+        variants={animPageOpacity}
         initial="initial"
         animate="animate"
         className={`${Styles.page} `}
@@ -243,21 +242,21 @@ const Index = () => {
                   }}
                 />
 
-                <p>
-                  <AnimatePresence mode="popLayout">
-                    {numResults !== null && (
-                      <motion.p
-                        key={numResults}
-                        variants={movetoY}
-                        initial="initial"
-                        animate="animate"
-                        exit="exit"
-                      >
-                        {numResults}
-                      </motion.p>
-                    )}
-                  </AnimatePresence>
-                </p>
+                {/* <p> */}
+                <AnimatePresence mode="popLayout">
+                  {numResults !== null && (
+                    <motion.p
+                      key={numResults}
+                      variants={movetoY_10}
+                      initial="initial"
+                      animate="animate"
+                      exit="exit"
+                    >
+                      {numResults}
+                    </motion.p>
+                  )}
+                </AnimatePresence>
+                {/* </p> */}
               </div>
             </motion.div>
 
@@ -295,7 +294,7 @@ const Index = () => {
             <AnimatePresence mode="wait" key={numResults}>
               <motion.div
                 key={sortStatus}
-                variants={moveY}
+                variants={moveY_Element}
                 initial={"initial"}
                 animate={"animate"}
                 exit={"exit"}
@@ -305,6 +304,9 @@ const Index = () => {
                   (e, k) =>
                     k < num && (
                       <Chapter
+                        number={num}
+                        load={changerNum}
+                        index={k}
                         opacity={opacity}
                         length={numResults}
                         key={k}

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Styles from "./home.module.css";
 import { motion } from "framer-motion";
-import { animCategories, animPage } from "./anim";
+import { animCategories, animPageHome } from "./../../Styles/anim";
 import { useNavigate } from "react-router-dom";
 import quranImg from "../../assets/png/quran.png";
 import searchImg from "../../assets/png/search.png";
@@ -73,19 +73,9 @@ const Index = () => {
   return (
     <>
       <div className={`${Styles.page}`}>
-        {/* <div className={`${Styles.header}`}>
-          <motion.div
-            variants={animSearch}
-            initial="initial"
-            animate="animate"
-            className={`${Styles.search}`}
-          >
-            search
-          </motion.div>
-        </div> */}
         <div className={`${Styles.categories}`}>
           <motion.div
-            variants={animPage}
+            variants={animPageHome}
             initial="initial"
             animate="animate"
             className={`${Styles.first}`}
@@ -105,14 +95,12 @@ const Index = () => {
                     background: e.bg,
                     backgroundSize: e.bg_size,
                     borderRadius: e.radius,
-                    // backgroundColor: e.bg_color,
                   }}
                   onClick={() => {
                     e.navigate();
                   }}
                 >
                   <p>{e.title}</p>
-                  {/* <div>{e.subTitle}</div> */}
                 </motion.div>
               );
             })}

@@ -1,95 +1,59 @@
-import React, { useEffect } from "react";
-import Styles from "./profile.module.css";
-import { SignedIn, UserButton } from "@clerk/clerk-react";
-import { useLocation } from "react-router-dom";
-import { motion } from "framer-motion";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPerson, faHeart } from "@fortawesome/free-solid-svg-icons";
-import {
-  allPage,
-  profile,
-  allContent,
-  content1,
-  content2,
-  content3,
-} from "./anim";
-import SignRequire from "../../components/Signed-Out";
+import loadable from "@loadable/component";
+import React from "react";
+import { useState } from "react";
+import { useEffect } from "react";
+import { useInView } from "react-intersection-observer";
+// Lazy load the component
+const LoadableComponent = loadable(() => import("./MyComponent.jsx"), {
+  fallback: <div>Loading...</div>,
+});
 
-const Index = () => {
-  const { pathname } = useLocation();
-  useEffect(() => {}, []);
+const App = () => {
+  const [loading, setloading] = useState(false);
 
+  const { ref, inView, entry } = useInView({
+    threshold: 0.1,
+    triggerOnce: false,
+  });
+  useEffect(() => {
+    if (inView) {
+      console.log("inView", entry?.target);
+      setloading(true);
+    }
+    return setloading(false);
+  }, [inView]);
   return (
     <div>
-      {/* <SignRequire /> */}
-      <SignedIn>
-        <motion.div
-          variants={allPage}
-          initial="initial"
-          animate="animate"
-          exit="exit"
-        >
-          <div className={`${Styles.profilePage}`}>
-            <motion.div
-              className={`
-                ${Styles.title}
-                text-xl h-16 font-bold text-center flex gap-4 justify-start items-center sticky top-0 pl-5 sm:pl-0 sm:justify-center
-              `}
-              style={{
-                zIndex: 10000,
-                boxShadow: "0 0 10px rgba(0, 0, 0, 0.5)",
-                borderRadius: "0 0 24px 24px",
-              }}
-            >
-              <FontAwesomeIcon icon={faPerson} />
-              <div>Profile</div>
-              <motion.div
-                variants={profile}
-                className={` ${Styles.userName} font-bold text-sm  p-2 rounded-full flex justify-center items-center w-fit`}
-              >
-                <UserButton
-                  showName
-                  userProfileMode="navigation"
-                  userProfileUrl="/profile/user"
-                />
-              </motion.div>
-            </motion.div>
+      <h1 className="text-5xl font-bold">Main Application</h1>
+      <h1 className="text-5xl font-bold">Main Application</h1>
+      <h1 className="text-5xl font-bold">Main Application</h1>
+      <h1 className="text-5xl font-bold">Main Application</h1>
+      <h1 className="text-5xl font-bold">Main Application</h1>
+      <h1 className="text-5xl font-bold">Main Application</h1>
+      <h1 className="text-5xl font-bold">Main Application</h1>
+      <h1 className="text-5xl font-bold">Main Application</h1>
+      <h1 className="text-5xl font-bold">Main Application</h1>
+      <h1 className="text-5xl font-bold">Main Application</h1>
+      <h1 className="text-5xl font-bold">Main Application</h1>
+      <h1 className="text-5xl font-bold">Main Application</h1>
+      <h1 className="text-5xl font-bold">Main Application</h1>
+      <h1 className="text-5xl font-bold">Main Application</h1>
+      <h1 className="text-5xl font-bold">Main Application</h1>
+      <h1 className="text-5xl font-bold">Main Application</h1>
+      <h1 className="text-5xl font-bold">Main Application</h1>
+      <h1 className="text-5xl font-bold">Main Application</h1>
+      <h1 className="text-5xl font-bold">Main Application</h1>
+      <h1 className="text-5xl font-bold">Main Application</h1>
+      <h1 className="text-5xl font-bold">Main Application</h1>
+      <h1 className="text-5xl font-bold">Main Application</h1>
+      <div ref={ref}>{loading && <LoadableComponent />}</div>
 
-            <motion.div
-              variants={allContent}
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              className={`${Styles.content}`}
-            >
-              <motion.div variants={content1} className={Styles.box}>
-                <div className={Styles.one}>
-                  <p>SAVED</p>
-                  <FontAwesomeIcon icon={faPerson} />
-                </div>
-              </motion.div>
-              <motion.div variants={content2} className={Styles.box}>
-                <div className={Styles.two}>
-                  <p>SAVED</p>
-                  <FontAwesomeIcon icon={faHeart} />
-                </div>
-                <div className={Styles.three}>
-                  <p>SAVED</p>
-                  <FontAwesomeIcon icon={faPerson} />
-                </div>
-              </motion.div>
-              <motion.div variants={content3} className={Styles.box}>
-                <div className={Styles.four}>
-                  <p>SAVED</p>
-                  <FontAwesomeIcon icon={faPerson} />
-                </div>
-              </motion.div>
-            </motion.div>
-          </div>
-        </motion.div>
-      </SignedIn>
+      <h1 className="text-5xl font-bold">Main Application</h1>
+      <h1 className="text-5xl font-bold">Main Application</h1>
+      <h1 className="text-5xl font-bold">Main Application</h1>
+      <h1 className="text-5xl font-bold">Main Application</h1>
     </div>
   );
 };
 
-export default Index;
+export default App;

@@ -1,15 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Styles from "./user.module.css";
-import {
-  SignedIn,
-  SignedOut,
-  SignIn,
-  UserButton,
-  UserProfile,
-} from "@clerk/clerk-react";
+import { SignedIn, UserProfile } from "@clerk/clerk-react";
 import { motion } from "framer-motion";
 import { useLocation } from "react-router-dom";
-import SignRequire from "../../../components/Signed-Out";
 
 const Index = () => {
   const { pathname } = useLocation();
@@ -17,7 +10,6 @@ const Index = () => {
 
   return (
     <>
-      {/* <SignRequire /> */}
       <SignedIn>
         <motion.div
           initial={{ opacity: 0 }}

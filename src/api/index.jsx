@@ -1,53 +1,6 @@
 import axios from "axios";
 import { supabase } from "../supabase";
 import _ from "lodash";
-import { useUser } from "@clerk/clerk-react";
-
-// دالة GET لجلب قائمة المستخدمين
-export const getUsers = async () => {
-  try {
-    const response = await axios.get(
-      "https://jsonplaceholder.typicode.com/users"
-    );
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching users:");
-    throw error;
-  }
-};
-
-// دالة GET لجلب بيانات مستخدم معين بناءً على ID
-export const getUserById = async (id) => {
-  try {
-    const response = await axios.get(
-      `https://jsonplaceholder.typicode.com/users/${id}`
-    );
-    return response.data;
-  } catch (error) {
-    console.error(`Error fetching user with ID ${id}:`, error);
-    throw error;
-  }
-};
-
-// دالة POST لإضافة مستخدم جديد
-export const addUser = async (user) => {
-  try {
-    const response = await axios.post(
-      "https://jsonplaceholder.typicode.com/users",
-      user
-    );
-    return response.data;
-  } catch (error) {
-    console.error("Error adding user:", error);
-    throw error;
-  }
-};
-
-// To Get Chapters list
-export const getChapters = async () => {
-  const apiA = await axios.get("https://api.quran.com/api/v4/chapters");
-  return apiA.data.chapters;
-};
 
 // To Get Fav list
 export const fav = async (id) => {
@@ -139,25 +92,69 @@ export const switchSave = async (chapter_id, user_id) => {
   }
 };
 
-export const addActions = async (id, chapters) => {
-  const favs = await fav(id);
-  const saves = await save(id);
+// To get Surah Name Font
+export const fontSurahName = async () => {
+  try {
+    const fontFace = new FontFace(
+      "surah",
+      `url(https://quran.com/fonts/quran/surah-names/v1/sura_names.woff2)`
+    );
 
-  const updatedChapters = _.map(chapters, (chapter) => {
-    // البحث عن البوست في المفضلة
-    const favChapter = _.find(favs, (fav) => fav.surah_id === chapter.id);
+    await fontFace.load();
+    document.fonts.add(fontFace);
+  } catch (error) {
+    console.error("حدث خطأ أثناء تحميل خط السور:", error);
+  }
+};
 
-    // البحث عن البوست في الحفظ
-    const saveChapter = _.find(saves, (save) => save.surah_id === chapter.id);
+// To get Font for each page and ayah by demand
+export const getFont = async (type, page) => {
+  const fontUrl = `https://quran.com/fonts/quran/hafs/${type}/woff2/p${page}.woff2`;
+  const fontFace = new FontFace(`p${page}`, `url(${fontUrl})`);
+  document.fonts.add(fontFace);
 
-    return {
-      ...chapter,
-      isFavorited: !!favChapter, // إذا كان موجودًا في المفضلة، إضافة `isFavorited: true`، وإذا لم يكن، `false`
-      favoriteDate: favChapter ? favChapter.created : null, // إذا كان موجودًا، أضف تاريخ التفضيل، وإلا `null`
-      isSaved: !!saveChapter, // إذا كان موجودًا في المحفوظة، إضافة `isSaved: true`، وإذا لم يكن، `false`
-      saveDate: saveChapter ? saveChapter.created : null, // إذا كان موجودًا، أضف تاريخ الحفظ، وإلا `null`
-    };
-  });
+  try {
+    await fontFace.load();
+    console.log(`تم تحميل جميع الخطوط من صفحة بنجاح`);
+  } catch (error) {
+    console.error("حدث خطأ أثناء تحميل الخطوط:", error);
+  }
+};
 
-  console.log(updatedChapters);
+export const ayahs = async (id, num, per) => {
+  try {
+    const apiA = await axios.get(
+      `https://api.qurancdn.com/api/qdc/verses/by_chapter/${id}?words=true&page=${num}&per_page=${per}&fields=text_uthmani_tajweed,text_uthmani,text_imlaei_simple,code_v1,code_v2&word_fields=true,text_uthmani_tajweed,location,code_v1,code_v2,qpc_uthmani_hafs,text_uthmani,verse_key&mushaf=19`
+    );
+    return apiA.data;
+  } catch (error) {
+    console.log("error", error);
+  }
+};
+
+export const chapter = {
+  // To Get Chapters list
+  getChapters: async () => {
+    try {
+      const apiA = await axios.get("https://api.quran.com/api/v4/chapters");
+      return apiA.data.chapters;
+    } catch (error) {
+      console.log("error", error);
+    }
+  },
+
+  // To Get Chapter Info By Id
+  getChapterInfo: async (id) => {
+    try {
+      const apiA = await axios.get(
+        `https://api.quran.com/api/v4/chapters/${id}`
+      );
+      return apiA.data.chapter;
+    } catch (error) {
+      console.log("error", error);
+    }
+  },
+
+  // To Get Chapter Verses By Id
+  getChapterVerses: async (id, type, fromPage, toPage) => {},
 };
