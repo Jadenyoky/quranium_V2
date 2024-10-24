@@ -1,3 +1,5 @@
+import { duration } from "@mui/material";
+
 export const movetoY = {
   initial: { opacity: 0, y: 10 },
   animate: {
@@ -97,7 +99,9 @@ export const animPageHome = {
     opacity: 1,
     transition: {
       type: "spring",
-      delay: 1,
+      delay: 2,
+      when: "beforeChildren",
+      staggerChildren: 2,
     },
   },
 };
@@ -114,6 +118,18 @@ export const animCategories = {
     visibility: "visible",
     transition: {
       type: "spring",
+      duration: 2,
+      delay: 0.1,
+    },
+  },
+  exit: {
+    x: "-100px",
+    opacity: 0,
+    visibility: "hidden",
+    transition: {
+      type: "spring",
+      duration: 2,
+      delay: 0.1,
     },
   },
 };

@@ -7,11 +7,10 @@ import quranImg from "../../assets/png/quran.png";
 import searchImg from "../../assets/png/search.png";
 import tafserImg from "../../assets/png/tafser.png";
 import listenImg from "../../assets/png/listen.png";
+import { useInView, defaultFallbackInView } from "react-intersection-observer";
 
 const Index = () => {
   const navi = useNavigate();
-
-  useEffect(() => {}, []);
 
   const categories = [
     {
@@ -81,14 +80,26 @@ const Index = () => {
             className={`${Styles.first}`}
           >
             {categories.map((e, k) => {
+              const { ref, inView, entry } = useInView({
+                threshold: 0.1,
+                triggerOnce: false,
+              });
+
+              useEffect(() => {
+                if (inView) {
+                  console.log(entry?.target, inView);
+                }
+              }, [inView]);
+
               return (
                 <motion.div
+                  ref={ref}
                   key={k}
                   variants={e.motion}
                   initial="initial"
-                  whileInView="animate"
+                  animate={inView ? "animate" : "exit"}
                   whileTap={{ scale: 0.9 }}
-                  viewport={{ once: true, amount: 0.5 }}
+                  viewport={{ once: false, amount: 1, margin: "500px" }}
                   custom={k}
                   className={e.class}
                   style={{
